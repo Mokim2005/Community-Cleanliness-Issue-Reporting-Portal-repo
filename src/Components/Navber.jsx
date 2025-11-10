@@ -1,8 +1,21 @@
-import React from "react";
+import React, { use } from "react";
 import { NavLink } from "react-router";
-import logo from '../assets/logo.png'
+import logo from "../assets/logo.png";
+import { AuthContext } from "../Context/AuthContext";
 
 const Navber = () => {
+  const { user, logOut } = use(AuthContext);
+
+  const handleLogOut = () => {
+    console.log("logout");
+    logOut()
+      .then(() => {
+        alert("you log out succesfully");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const links = (
     <>
       <li>
@@ -10,6 +23,9 @@ const Navber = () => {
       </li>
       <li>
         <NavLink to="/issus">All Issus</NavLink>
+      </li>
+      <li>
+        <NavLink to="/addIssus">Add Issus</NavLink>
       </li>
       <li>
         <NavLink to="/register">Register</NavLink>
@@ -44,31 +60,23 @@ const Navber = () => {
             {links}
           </ul>
         </div>
-        <NavLink to='/' className="">
+        <NavLink to="/" className="">
           <img className="w-[60px] cursor-pointer" src={logo} alt="" />
         </NavLink>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
+
       <div className="navbar-end">
-        <h2 className="btn text-primary">Login</h2>
-      </div>
-      {/* <div className="navbar-end">
         {user ? (
-          <NavLink
-            to="/login"
-            onClick={handleSignOut}
-            className="btn btn-primary"
-          >
+          <NavLink onClick={handleLogOut} className="btn btn-primary">
             SignOut
           </NavLink>
         ) : (
-          <NavLink to="register" className="btn btn-primary">
-            Login
-          </NavLink>
+          <NavLink to='/login' className="btn btn-primary">Login</NavLink>
         )}
-      </div> */}
+      </div>
     </div>
   );
 };

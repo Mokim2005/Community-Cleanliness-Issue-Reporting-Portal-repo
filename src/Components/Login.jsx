@@ -1,26 +1,61 @@
-import React from "react";
+import React, { use } from "react";
+
+import { Link } from "react-router";
+import { AuthContext } from "../Context/AuthContext";
 
 const Login = () => {
-    const handleSignInWithGoogle =(e)=>{
-        e.preventDefaoult()
-    }
+  const {signIn} = use(AuthContext)
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const email = e.target.email.value;
+    const passoword = e.target.passoword.value;
+    // console.log({email, passoword});
+    signIn(email, passoword)
+    .then(res=>{
+     const user = res.user
+     console.log(user)
+    })
+    .catch(error=>{
+      console.log(error.message)
+    })
+  };
+
   return (
     <div className="card bg-base-100 mx-auto w-full max-w-sm shrink-0 shadow-2xl">
       <h1 className="text-3xl font-bold text-center">Login</h1>
-      <div className="card-body">
+      <form onSubmit={handleLogin} className="card-body">
         <fieldset className="fieldset">
+          {/* email  */}
           <label className="label">Email</label>
-          <input type="email" className="input" placeholder="Email" />
+          <input
+            name="email"
+            type="email"
+            className="input"
+            placeholder="Email"
+          />
+          {/* password  */}
           <label className="label">Password</label>
-          <input type="password" className="input" placeholder="Password" />
+          <input
+            name="passoword"
+            type="password"
+            className="input"
+            placeholder="Password"
+          />
           <div>
             <a className="link link-hover">Forgot password?</a>
           </div>
           <button className="btn btn-neutral mt-4">Login</button>
+          <p>
+            don't have an account, please  
+            <Link to="/register" className="text-green-600 underline">
+              register
+            </Link>
+          </p>
         </fieldset>
         {/* Google */}
         <button
-          onClick={handleSignInWithGoogle}
+         
           className="btn bg-white text-black border-[#e5e5e5]"
         >
           <svg
@@ -52,7 +87,7 @@ const Login = () => {
           </svg>
           Login with Google
         </button>
-      </div>
+      </form>
     </div>
   );
 };

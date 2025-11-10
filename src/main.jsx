@@ -9,6 +9,7 @@ import Issus from "./Pages/Issus.jsx";
 import AuthProvider from "./Context/AuthProvider.jsx";
 import Login from "./Components/Login.jsx";
 import Register from "./Components/Register.jsx";
+import AddIssus from "./Pages/AddIssus.jsx";
 
 const router = createBrowserRouter([
   {
@@ -22,22 +23,28 @@ const router = createBrowserRouter([
       {
         path: "/issus",
         Component: Issus,
-        loader: ()=>fetch(`http://localhost:3000/issus`)
+        loader: () => fetch(`http://localhost:3000/issus`),
       },
       {
-        path:'/login',
-        Component: Login
+        path: "/login",
+        Component: Login,
       },
       {
-        path: '/register',
-        Component: Register
-      }
+        path: "/register",
+        Component: Register,
+      },
+      {
+        path: "/addIssus",
+        Component: AddIssus,
+      },
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>
 );
