@@ -10,6 +10,7 @@ import AuthProvider from "./Context/AuthProvider.jsx";
 import Login from "./Components/Login.jsx";
 import Register from "./Components/Register.jsx";
 import AddIssus from "./Pages/AddIssus.jsx";
+import IssueDetails from "./Components/IssusDetails.jsx";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,11 @@ const router = createBrowserRouter([
       {
         path: "/addIssus",
         Component: AddIssus,
+      },
+      {
+        path: "/issueDetails/:id",
+        element: <IssueDetails></IssueDetails>,
+        loader: ({params})=> fetch(`http://localhost:3000/issus/${params.id}`)
       },
     ],
   },

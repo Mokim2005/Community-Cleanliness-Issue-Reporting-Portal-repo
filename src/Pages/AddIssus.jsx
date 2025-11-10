@@ -17,7 +17,7 @@ const AddIssus = () => {
       email: e.target.email.value,
     };
     console.log(formData);
-    fetch("http://localhost:3000/addIssus", {
+    fetch("http://localhost:3000/issus", {
       method: "POST",
       headers: {
         "content-type": "application/json",

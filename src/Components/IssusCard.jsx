@@ -1,21 +1,23 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 
 const IssueCard = ({ issus }) => {
-  const { image, title, category, description, amount } = issus;
-  const data = {
-    id: "10",
-    title: "Overflowing waste container near bus stop",
-    category: "Garbage",
-    location: "Tejgaon, Dhaka",
-    description:
-      "Large waste container near the bus stop is overflowing with garbage.",
-    image:
-      "https://images.unsplash.com/photo-1590845947725-bd0efb0ed1c0?auto=format&fit=crop&w=800&q=80",
-    amount: 200,
-    email: "user10@mail.com",
-    date: "2025-11-04",
-  };
+  const { _id, image, title, category, description, amount, location } = issus;
+  console.log(issus);
+  // const data = {
+  //   id: "10",
+  //   title: "Overflowing waste container near bus stop",
+  //   category: "Garbage",
+  //   location: "Tejgaon, Dhaka",
+  //   description:
+  //     "Large waste container near the bus stop is overflowing with garbage.",
+  //   image:
+  //     "https://images.unsplash.com/photo-1590845947725-bd0efb0ed1c0?auto=format&fit=crop&w=800&q=80",
+  //   amount: 200,
+  //   email: "user10@mail.com",
+  //   date: "2025-11-04",
+  // };
 
   return (
     <motion.div
@@ -41,7 +43,7 @@ const IssueCard = ({ issus }) => {
         </h2>
 
         <p className="text-sm text-gray-600 mb-2">
-          📍 <span className="font-medium">{data.location}</span>
+          📍 <span className="font-medium">{location}</span>
         </p>
 
         <p className="text-gray-700 text-sm mb-4 line-clamp-2">{description}</p>
@@ -55,7 +57,7 @@ const IssueCard = ({ issus }) => {
             whileTap={{ scale: 0.9 }}
             className="bg-gradient-to-r from-green-400 to-emerald-600 text-white px-4 py-2 rounded-full shadow hover:shadow-md transition-all duration-300 text-sm font-medium"
           >
-            See Details
+            <Link to={`/issueDetails/${_id}`}>See Details</Link>
           </motion.button>
         </div>
       </div>
