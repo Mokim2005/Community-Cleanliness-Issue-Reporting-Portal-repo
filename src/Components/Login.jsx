@@ -4,7 +4,7 @@ import { Link } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
 
 const Login = () => {
-  const {signIn} = use(AuthContext)
+  const { signIn, signInWithGoogle } = use(AuthContext);
   const handleLogin = (e) => {
     e.preventDefault();
 
@@ -12,13 +12,22 @@ const Login = () => {
     const passoword = e.target.passoword.value;
     // console.log({email, passoword});
     signIn(email, passoword)
-    .then(res=>{
-     const user = res.user
-     console.log(user)
-    })
-    .catch(error=>{
-      console.log(error.message)
-    })
+      .then((res) => {
+        const user = res.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+  const handleLoginWithGoogle = () => {
+    signInWithGoogle()
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -46,16 +55,10 @@ const Login = () => {
             <a className="link link-hover">Forgot password?</a>
           </div>
           <button className="btn btn-neutral mt-4">Login</button>
-          <p>
-            don't have an account, please  
-            <Link to="/register" className="text-green-600 underline">
-              register
-            </Link>
-          </p>
         </fieldset>
         {/* Google */}
         <button
-         
+          onClick={handleLoginWithGoogle}
           className="btn bg-white text-black border-[#e5e5e5]"
         >
           <svg
@@ -87,6 +90,12 @@ const Login = () => {
           </svg>
           Login with Google
         </button>
+        <p>
+          don't have an account, please
+          <Link to="/register" className="text-green-600 underline">
+            register
+          </Link>
+        </p>
       </form>
     </div>
   );
