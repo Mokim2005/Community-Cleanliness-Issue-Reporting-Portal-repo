@@ -28,6 +28,9 @@ const Navber = () => {
         <NavLink to="/addIssus">Add Issus</NavLink>
       </li>
       <li>
+        <NavLink to="/myIssus">My Issus</NavLink>
+      </li>
+      <li>
         <NavLink to="/register">Register</NavLink>
       </li>
     </>

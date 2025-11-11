@@ -13,6 +13,7 @@ const Issus = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 via-emerald-100 to-green-200 py-12 px-4">
       {/* Header Section */}
+      <title>Issus</title>
       <motion.div
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}

@@ -25,6 +25,7 @@ const Register = () => {
 
   return (
     <div className="card flex mx-auto bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+      <title>Register</title>
       <div className="card-body">
         <h1 className="text-3xl font-bold text-center">Please Register</h1>
         <form onSubmit={handleRegister}>
@@ -72,7 +73,7 @@ const Register = () => {
               Register
             </button>
             <p>
-              Already have an account, please  
+              Already have an account, please
               <Link to="/login" className="text-green-600 underline">
                 login
               </Link>

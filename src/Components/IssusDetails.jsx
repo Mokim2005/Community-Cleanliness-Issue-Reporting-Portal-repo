@@ -51,6 +51,7 @@ const IssueDetails = () => {
       .then((data) => {
         alert("✅ Contribution Successful!");
         setIsOpen(false);
+        
         form.reset();
 
         // 🔹 Update contributors state instantly
@@ -66,6 +67,7 @@ const IssueDetails = () => {
       transition={{ duration: 0.8 }}
       className="min-h-screen bg-gradient-to-b from-green-50 to-emerald-100 flex justify-center items-center p-5"
     >
+      <title>Issus Details</title>
       <motion.div
         initial={{ scale: 0.95 }}
         animate={{ scale: 1 }}
@@ -181,7 +183,7 @@ const IssueDetails = () => {
                   readOnly
                   className="w-full p-3 border rounded-lg bg-gray-100"
                 />
-                <label className="label">Photo URL</label>
+             
                 <input
                   name="photoURL"
                   type="text"

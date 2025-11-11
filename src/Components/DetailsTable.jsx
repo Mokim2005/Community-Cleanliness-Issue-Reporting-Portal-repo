@@ -3,6 +3,7 @@ import React from "react";
 const DetailsTable = ({contributors}) => {
   return (
     <div>
+      
       <div className="mt-6">
         <h2 className="text-xl font-bold mb-3">Contributors</h2>
         <table className="w-full text-left border-collapse">
@@ -18,7 +19,7 @@ const DetailsTable = ({contributors}) => {
               <tr key={c._id} className="hover:bg-green-50">
                 <td className="p-2 border">
                   <img
-                    src={c.image || "https://via.placeholder.com/40"}
+                    src={c.image || "https://cdn-icons-png.flaticon.com/512/700/700674.png"}
                     alt={c.contributorName}
                     className="w-10 h-10 rounded-full"
                   />

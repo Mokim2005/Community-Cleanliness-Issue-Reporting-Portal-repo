@@ -11,6 +11,8 @@ import Login from "./Components/Login.jsx";
 import Register from "./Components/Register.jsx";
 import AddIssus from "./Pages/AddIssus.jsx";
 import IssueDetails from "./Components/IssusDetails.jsx";
+import Error from "./Components/Error.jsx";
+import MyIssus from "./Pages/MyIssus.jsx";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +45,15 @@ const router = createBrowserRouter([
         element: <IssueDetails></IssueDetails>,
         loader: ({params})=> fetch(`http://localhost:3000/issus/${params.id}`)
       },
+      {
+        path: '/myIssus',
+        element: <MyIssus></MyIssus>,
+        loader: ()=> fetch('http://localhost:3000/contributions')
+      },
+      {
+        path: '*',
+        Component:Error
+      }
     ],
   },
 ]);

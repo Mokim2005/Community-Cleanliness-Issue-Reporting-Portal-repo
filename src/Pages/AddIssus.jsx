@@ -36,6 +36,7 @@ const AddIssus = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-100 via-emerald-50 to-white flex items-center justify-center py-10 px-4">
       {/* 🧾 Form Box */}
+      <title>Add Issus</title>
       <motion.form
         onSubmit={handleSubmit}
         initial={{ opacity: 0, y: 40 }}
