@@ -32,6 +32,7 @@ const IssueDetails = () => {
     const contributionData = {
       issueId: _id,
       title: form.title.value,
+      category: form.category.value,
       amount: form.amount.value,
       contributorName: form.name.value,
       email: form.email.value,
@@ -40,7 +41,7 @@ const IssueDetails = () => {
       date: new Date().toLocaleDateString(),
       additionalInfo: form.info.value,
     };
-
+    console.log(contributionData, "from details page");
     // Send to backend
     fetch(`http://localhost:3000/contributions`, {
       method: "POST",
@@ -51,7 +52,7 @@ const IssueDetails = () => {
       .then((data) => {
         alert("✅ Contribution Successful!");
         setIsOpen(false);
-        
+
         form.reset();
 
         // 🔹 Update contributors state instantly
@@ -183,7 +184,7 @@ const IssueDetails = () => {
                   readOnly
                   className="w-full p-3 border rounded-lg bg-gray-100"
                 />
-             
+
                 <input
                   name="photoURL"
                   type="text"
@@ -197,6 +198,14 @@ const IssueDetails = () => {
                   placeholder="Phone Number"
                   className="w-full p-3 border rounded-lg"
                   required
+                />
+                <input
+                  type="text"
+                  name="category"
+                  placeholder="Category"
+                  value={category || ""}
+                  readOnly
+                  className="w-full p-3 border rounded-lg"
                 />
                 <input
                   type="text"

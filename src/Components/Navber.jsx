@@ -24,15 +24,19 @@ const Navber = () => {
       <li>
         <NavLink to="/issus">All Issus</NavLink>
       </li>
-      <li>
-        <NavLink to="/addIssus">Add Issus</NavLink>
-      </li>
-      <li>
-        <NavLink to="/myIssus">My Issus</NavLink>
-      </li>
-      <li>
-        <NavLink to="/register">Register</NavLink>
-      </li>
+      {user && (
+        <>
+          <li>
+            <NavLink to="/addIssus">Add Issus</NavLink>
+          </li>
+          <li>
+            <NavLink to="/myIssus">My Issus</NavLink>
+          </li>
+          <li>
+            <NavLink to="/myContribution">My Contribution</NavLink>
+          </li>
+        </>
+      )}
     </>
   );
   return (
@@ -77,7 +81,9 @@ const Navber = () => {
             SignOut
           </NavLink>
         ) : (
-          <NavLink to='/login' className="btn btn-primary">Login</NavLink>
+          <NavLink to="/login" className="btn btn-primary">
+            Login
+          </NavLink>
         )}
       </div>
     </div>

@@ -12,6 +12,8 @@ import Register from "./Components/Register.jsx";
 import AddIssus from "./Pages/AddIssus.jsx";
 import IssueDetails from "./Components/IssusDetails.jsx";
 import Error from "./Components/Error.jsx";
+import MyContribution from "./Pages/MyContribution.jsx";
+import PrivateRoute from "./Components/PrivateRout.jsx";
 import MyIssus from "./Pages/MyIssus.jsx";
 
 const router = createBrowserRouter([
@@ -38,22 +40,44 @@ const router = createBrowserRouter([
       },
       {
         path: "/addIssus",
-        Component: AddIssus,
+        element: (
+          <PrivateRoute>
+            <AddIssus></AddIssus>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/issueDetails/:id",
-        element: <IssueDetails></IssueDetails>,
-        loader: ({params})=> fetch(`http://localhost:3000/issus/${params.id}`)
+        element: (
+          <PrivateRoute>
+            <IssueDetails></IssueDetails>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/issus/${params.id}`),
       },
       {
-        path: '/myIssus',
-        element: <MyIssus></MyIssus>,
-        loader: ()=> fetch('http://localhost:3000/contributions')
+        path: "/myContribution",
+        element: (
+          <PrivateRoute>
+            <MyContribution></MyContribution>
+          </PrivateRoute>
+        ),
+        loader: () => fetch("http://localhost:3000/contributions"),
       },
       {
-        path: '*',
-        Component:Error
-      }
+        path: "/myIssus",
+        element: (
+          <PrivateRoute>
+            <MyIssus></MyIssus>
+          </PrivateRoute>
+        ),
+        loader: () => fetch("http://localhost:3000/issus"),
+      },
+      {
+        path: "*",
+        Component: Error,
+      },
     ],
   },
 ]);

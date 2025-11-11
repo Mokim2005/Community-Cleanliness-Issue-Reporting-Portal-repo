@@ -1,88 +1,73 @@
 import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const slides = [
   {
     id: 1,
-    title: "Garbage Issue",
-    subtitle: "Help us clean our streets!",
     image:
-      "https://images.unsplash.com/photo-1593531158912-d1c0f90a1443?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+      "https://i.ibb.co.com/Ld09m7Dj/photo-1572213426852-0e4ed8f41ff6-ixlib-rb-4-1.jpg",
+    text: "🌊 Refresh the Earth — Keep It Clean",
   },
   {
     id: 2,
-    title: "Community Cleaning",
-    subtitle: "Join community clean-up drives",
     image:
-      "https://images.unsplash.com/photo-1581091870620-d33bb51b4c20?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+      "https://i.ibb.co.com/Hf3jQ833/what-happens-when-you-cleanup-the-great-pacific-garbage-patch.jpg",
+    text: "🌿 Nature is our Home — Protect It",
   },
   {
     id: 3,
-    title: "Sustainability Action",
-    subtitle: "Make the earth greener and cleaner",
-    image:
-      "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+    image: "https://i.ibb.co.com/Lhx59txg/free-video-3186590.jpg",
+    text: "☀️ Together for a Greener Future",
   },
 ];
 
 const Slider = () => {
   const [current, setCurrent] = useState(0);
-  const length = slides.length;
 
-  // Auto-play
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrent((prev) => (prev === length - 1 ? 0 : prev + 1));
-    }, 4000);
+      setCurrent((prev) => (prev + 1) % slides.length);
+    }, 4000); // auto change every 4 sec
     return () => clearInterval(interval);
-  }, [length]);
-
-  const nextSlide = () => setCurrent(current === length - 1 ? 0 : current + 1);
-  const prevSlide = () => setCurrent(current === 0 ? length - 1 : current - 1);
+  }, []);
 
   return (
-    <div className="relative w-full max-w-5xl mx-auto mt-6 overflow-hidden rounded-lg shadow-lg">
-      {slides.map((slide, index) => (
-        <div
-          key={slide.id}
-          className={`${
-            index === current ? "block" : "hidden"
-          } w-full h-64 md:h-96 relative`}
+    <div className="relative w-full h-[400px] overflow-hidden rounded-2xl shadow-lg">
+      <AnimatePresence mode="wait">
+        <motion.img
+          key={slides[current].id}
+          src={slides[current].image}
+          alt="slider"
+          className="w-full h-full object-cover"
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 1.1 }}
+          transition={{ duration: 1 }}
+        />
+      </AnimatePresence>
+
+      {/* Overlay Text */}
+      <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+        <motion.h2
+          key={slides[current].text}
+          className="text-white text-2xl md:text-4xl font-semibold text-center px-4"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
         >
-          <img
-            src={slide.image}
-            alt={slide.title}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-center text-white p-4">
-            <h2 className="text-2xl md:text-4xl font-bold">{slide.title}</h2>
-            <p className="mt-2 text-lg md:text-xl">{slide.subtitle}</p>
-          </div>
-        </div>
-      ))}
+          {slides[current].text}
+        </motion.h2>
+      </div>
 
-      {/* Prev/Next Buttons */}
-      <button
-        onClick={prevSlide}
-        className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-white bg-opacity-70 text-black rounded-full p-2 hover:bg-opacity-100"
-      >
-        &#10094;
-      </button>
-      <button
-        onClick={nextSlide}
-        className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-white bg-opacity-70 text-black rounded-full p-2 hover:bg-opacity-100"
-      >
-        &#10095;
-      </button>
-
-      {/* Dots */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-        {slides.map((_, idx) => (
-          <span
-            key={idx}
-            className={`h-3 w-3 rounded-full ${
-              idx === current ? "bg-white" : "bg-gray-400"
+      {/* Dots Indicator */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+        {slides.map((_, i) => (
+          <div
+            key={i}
+            className={`w-3 h-3 rounded-full ${
+              i === current ? "bg-white" : "bg-white/40"
             }`}
-          ></span>
+          ></div>
         ))}
       </div>
     </div>

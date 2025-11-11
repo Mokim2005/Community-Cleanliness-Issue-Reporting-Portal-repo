@@ -1,85 +1,77 @@
-import React, { use } from "react";
+// Register.jsx
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router";
+import Swal from "sweetalert2";
 import { AuthContext } from "../Context/AuthContext";
-import { Link } from "react-router";
 
 const Register = () => {
-  const { createUser, setUser } = use(AuthContext);
+  const navigate = useNavigate();
+  const { createUser, signInWithGoogle } = useContext(AuthContext);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     const name = e.target.name.value;
-    const photoURL = e.target.photoURL.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password, name, photoURL);
-    createUser(email, password)
-      .then((res) => {
-        const user = res.user;
-        // console.log(user);
-        setUser(user);
-      })
-      .catch((error) => {
-        alert(error.message);
+    const photo = e.target.photo.value;
+
+    // Password validation
+    if (password.length < 6) return alert("Password must be at least 6 characters");
+    
+    try {
+      await createUser(email, password);
+      
+      // Save to backend
+      const res = await fetch("http://localhost:3000/user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, photo }),
       });
+      const data = await res.json();
+      if (!data.success) return alert(data.message);
+
+      Swal.fire("Success", "Account created!", "success");
+      navigate("/login");
+    } catch (err) {
+      console.log(err);
+      alert("Error: " + err.message);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await signInWithGoogle();
+      const user = result.user;
+
+      // Send to backend
+      await fetch("http://localhost:3000/user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: user.displayName, email: user.email, photo: user.photoURL }),
+      });
+
+      Swal.fire("Success", "Logged in with Google!", "success");
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+      alert(err.message);
+    }
   };
 
   return (
-    <div className="card flex mx-auto bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-      <title>Register</title>
-      <div className="card-body">
-        <h1 className="text-3xl font-bold text-center">Please Register</h1>
-        <form onSubmit={handleRegister}>
-          <fieldset className="fieldset">
-            {/* name  */}
-            <label className="label">Name</label>
-            <input
-              name="name"
-              type="text"
-              className="input"
-              placeholder="Name"
-              required
-            />
-            {/* Photo URL  */}
-            <label className="label">Photo URL</label>
-            <input
-              name="photoURL"
-              type="text"
-              className="input"
-              placeholder="PhotoURL"
-              required
-            />
-            {/* email  */}
-            <label className="label">Email</label>
-            <input
-              name="email"
-              type="email"
-              className="input"
-              placeholder="Email"
-              required
-            />
-            {/* pasword  */}
-            <label className="label">Password</label>
-            <input
-              name="password"
-              type="password"
-              className="input"
-              placeholder="Password"
-              required
-            />
-            <div>
-              <a className="link link-hover">Forgot password?</a>
-            </div>
-            <button type="submit" className="btn btn-neutral mt-4">
-              Register
-            </button>
-            <p>
-              Already have an account, please
-              <Link to="/login" className="text-green-600 underline">
-                login
-              </Link>
-            </p>
-          </fieldset>
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
+      <div className="bg-gray-800 p-8 rounded-xl w-full max-w-md">
+        <h1 className="text-2xl font-bold mb-4">Register</h1>
+        <form onSubmit={handleRegister} className="space-y-4">
+          <input type="text" name="name" placeholder="Full Name" required className="w-full p-2 rounded bg-gray-700"/>
+          <input type="text" name="photo" placeholder="Photo URL" className="w-full p-2 rounded bg-gray-700"/>
+          <input type="email" name="email" placeholder="Email" required className="w-full p-2 rounded bg-gray-700"/>
+          <input type={showPassword ? "text" : "password"} name="password" placeholder="Password" required className="w-full p-2 rounded bg-gray-700"/>
+          <button type="submit" className="w-full p-2 bg-blue-600 rounded">Register</button>
         </form>
+        <button onClick={handleGoogleSignIn} className="w-full mt-2 p-2 bg-red-600 rounded">Sign in with Google</button>
+        <p className="mt-4">Already have an account? <Link to="/login" className="text-blue-400">Login</Link></p>
       </div>
     </div>
   );
