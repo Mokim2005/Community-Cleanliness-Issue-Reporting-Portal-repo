@@ -15,6 +15,7 @@ import Error from "./Components/Error.jsx";
 import MyContribution from "./Pages/MyContribution.jsx";
 import PrivateRoute from "./Components/PrivateRout.jsx";
 import MyIssus from "./Pages/MyIssus.jsx";
+import { ThemeProvider } from "next-themes";
 
 const router = createBrowserRouter([
   {
@@ -84,8 +85,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <ThemeProvider attribute='class' defaultTheme="light">
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </ThemeProvider>
   </StrictMode>
 );
