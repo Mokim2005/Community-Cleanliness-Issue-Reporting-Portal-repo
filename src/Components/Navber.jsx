@@ -1,12 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { NavLink } from "react-router";
 import logo from "../assets/logo.png";
 import { AuthContext } from "../Context/AuthContext";
 import { FaSun, FaMoon } from "react-icons/fa";
 
 const Navber = () => {
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut } = use(AuthContext);
   const [theme, setTheme] = useState("light");
+  console.log('this is navber user info'.user)
 
   // Load theme on mount
   useEffect(() => {
@@ -160,7 +161,7 @@ const Navber = () => {
           <div className="flex items-center gap-2">
             {user.photoURL && (
               <img
-                src={user.photoURL}
+                src={user?.photoURL}
                 alt="User"
                 className="w-9 h-9 rounded-full border-2 border-primary object-cover"
               />
