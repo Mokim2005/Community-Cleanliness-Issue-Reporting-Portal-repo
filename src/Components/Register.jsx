@@ -3,6 +3,7 @@ import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Context/AuthContext";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -17,11 +18,12 @@ const Register = () => {
     const photo = e.target.photo.value;
 
     // Password validation
-    if (password.length < 6) return alert("Password must be at least 6 characters");
-    
+    if (password.length < 6)
+      return alert("Password must be at least 6 characters");
+
     try {
       await createUser(email, password);
-      
+
       // Save to backend
       const res = await fetch("http://localhost:3000/user", {
         method: "POST",
@@ -48,7 +50,11 @@ const Register = () => {
       await fetch("http://localhost:3000/user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: user.displayName, email: user.email, photo: user.photoURL }),
+        body: JSON.stringify({
+          name: user.displayName,
+          email: user.email,
+          photo: user.photoURL,
+        }),
       });
 
       Swal.fire("Success", "Logged in with Google!", "success");
@@ -64,14 +70,58 @@ const Register = () => {
       <div className="bg-gray-800 p-8 rounded-xl w-full max-w-md">
         <h1 className="text-2xl font-bold mb-4">Register</h1>
         <form onSubmit={handleRegister} className="space-y-4">
-          <input type="text" name="name" placeholder="Full Name" required className="w-full p-2 rounded bg-gray-700"/>
-          <input type="text" name="photo" placeholder="Photo URL" className="w-full p-2 rounded bg-gray-700"/>
-          <input type="email" name="email" placeholder="Email" required className="w-full p-2 rounded bg-gray-700"/>
-          <input type={showPassword ? "text" : "password"} name="password" placeholder="Password" required className="w-full p-2 rounded bg-gray-700"/>
-          <button type="submit" className="w-full p-2 bg-blue-600 rounded">Register</button>
+          <input
+            type="text"
+            name="name"
+            placeholder="Full Name"
+            required
+            className="w-full p-2 rounded bg-gray-700"
+          />
+          <input
+            type="text"
+            name="photo"
+            placeholder="Photo URL"
+            className="w-full p-2 rounded bg-gray-700"
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+            className="w-full p-2 rounded bg-gray-700"
+          />
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              required
+              className="w-full p-2 rounded bg-gray-700"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-2 top-2 cursor-pointer"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
+          <button type="submit" className="w-full p-2 bg-blue-600 rounded cursor-pointer">
+            Register
+          </button>
         </form>
-        <button onClick={handleGoogleSignIn} className="w-full mt-2 p-2 bg-red-600 rounded">Sign in with Google</button>
-        <p className="mt-4">Already have an account? <Link to="/login" className="text-blue-400">Login</Link></p>
+        <button
+          onClick={handleGoogleSignIn}
+          className="w-full mt-2 p-2 bg-red-600 rounded cursor-pointer"
+        >
+          Sign in with Google
+        </button>
+        <p className="mt-4">
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-400 cursor-pointer">
+            Login
+          </Link>
+        </p>
       </div>
     </div>
   );

@@ -2,16 +2,46 @@ import React, { use } from "react";
 import { useLoaderData } from "react-router";
 import { FileDown } from "lucide-react";
 import { AuthContext } from "../Context/AuthContext";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import { toast } from "react-toastify";
 
 const MyContribution = () => {
   const { user } = use(AuthContext);
-  const data = useLoaderData(); // dynamic data from loader
+  const data = useLoaderData();
 
-  // filter only logged-in user's data
   const myContributions = Array.isArray(data)
     ? data.filter((item) => item.email === user?.email)
     : [];
-  console.log(myContributions);
+
+  const downloadToPdf = (issue) => {
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text("Contribution Report", 14, 20);
+
+    doc.setFontSize(12);
+    doc.text(`Contributor: ${user?.displayName || "Anonymous"}`, 14, 30);
+    doc.text(`Email: ${user?.email || "N/A"}`, 14, 38);
+    doc.text(`Date: ${issue.date || "N/A"}`, 14, 46);
+
+    // ✅ Use autoTable function directly
+    autoTable(doc, {
+      startY: 60,
+      head: [["Issue Title", "Category", "Paid Amount"]],
+      body: [[issue.title, issue.category, `$${issue.amount || 0}`]],
+    });
+
+    doc.text(
+      "Thank you for your valuable contribution to the community!",
+      14,
+      doc.lastAutoTable.finalY + 20
+    );
+
+    doc.save(`Contribution_${issue.title}.pdf`);
+    toast("✅ PDF downloaded successfully!");
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100 py-12 px-4 md:px-10">
       <title>My Contributions</title>
@@ -55,7 +85,10 @@ const MyContribution = () => {
                     {issue.date || "N/A"}
                   </td>
                   <td className="py-3 px-6">
-                    <button className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition">
+                    <button
+                      onClick={() => downloadToPdf(issue)}
+                      className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition"
+                    >
                       <FileDown className="w-4 h-4" />
                       Download
                     </button>

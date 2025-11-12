@@ -1,12 +1,14 @@
 import React, { use } from "react";
 import { motion } from "framer-motion";
 import { AuthContext } from "../Context/AuthContext";
+import { toast } from "react-toastify";
 
 const AddIssus = () => {
   const { user } = use(AuthContext);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const formData = {
       title: e.target.title.value,
       category: e.target.category.value,
@@ -16,27 +18,31 @@ const AddIssus = () => {
       amount: e.target.amount.value,
       email: e.target.email.value,
     };
-    console.log(formData);
-    fetch("http://localhost:3000/issus", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
+
+    try {
+      const res = await fetch("http://localhost:3000/issus", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(formData),
       });
+
+      if (!res.ok) throw new Error("Server error");
+
+      const data = await res.json();
+      console.log(data);
+
+      toast("✅ Issue added successfully!");
+
+      e.target.reset();
+    } catch (error) {
+      console.error(error);
+      toast("❌ Failed to add issue. Please try again.");
+    }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-100 via-emerald-50 to-white flex items-center justify-center py-10 px-4">
-      {/* 🧾 Form Box */}
-      <title>Add Issus</title>
+      <title>Add Issue</title>
       <motion.form
         onSubmit={handleSubmit}
         initial={{ opacity: 0, y: 40 }}
@@ -48,9 +54,8 @@ const AddIssus = () => {
           🧹 Report a Community Issue
         </h2>
 
-        {/* ===== All Input Fields inside Form ===== */}
+        {/* === Inputs (same as before) === */}
         <div className="space-y-5">
-          {/* Title */}
           <div>
             <label className="block font-medium text-gray-700 mb-1">
               Issue Title
@@ -64,7 +69,6 @@ const AddIssus = () => {
             />
           </div>
 
-          {/* Category */}
           <div>
             <label className="block font-medium text-gray-700 mb-1">
               Category
@@ -82,7 +86,6 @@ const AddIssus = () => {
             </select>
           </div>
 
-          {/* Location */}
           <div>
             <label className="block font-medium text-gray-700 mb-1">
               Location
@@ -96,7 +99,6 @@ const AddIssus = () => {
             />
           </div>
 
-          {/* Description */}
           <div>
             <label className="block font-medium text-gray-700 mb-1">
               Description
@@ -110,7 +112,6 @@ const AddIssus = () => {
             ></textarea>
           </div>
 
-          {/* Image */}
           <div>
             <label className="block font-medium text-gray-700 mb-1">
               Image URL
@@ -124,7 +125,6 @@ const AddIssus = () => {
             />
           </div>
 
-          {/* Amount */}
           <div>
             <label className="block font-medium text-gray-700 mb-1">
               Suggested Fix Budget (৳)
@@ -137,7 +137,6 @@ const AddIssus = () => {
             />
           </div>
 
-          {/* Email */}
           <div>
             <label className="block font-medium text-gray-700 mb-1">
               Your Email
@@ -150,6 +149,7 @@ const AddIssus = () => {
               className="w-full p-3 border rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed"
             />
           </div>
+
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -159,8 +159,6 @@ const AddIssus = () => {
             🚮 Submit Issue
           </motion.button>
         </div>
-
-        {/* ===== Submit Button ===== */}
       </motion.form>
     </div>
   );

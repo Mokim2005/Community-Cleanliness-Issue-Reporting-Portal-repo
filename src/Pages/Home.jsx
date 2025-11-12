@@ -3,6 +3,7 @@ import Banner from "../Components/Banner";
 import Slider from "../Components/Slider";
 import Cards from "../Components/Card";
 import TotalUser from "../Components/TotalUser";
+import { ToastContainer } from "react-toastify";
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
       <TotalUser></TotalUser>
       <Slider></Slider>
       <Cards></Cards>
+      <ToastContainer></ToastContainer>
     </div>
   );
 };

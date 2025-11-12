@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { useLoaderData } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "react-toastify";
 
 const MyIssues = () => {
   const { user } = useContext(AuthContext);
@@ -50,11 +51,11 @@ const MyIssues = () => {
           )
         );
         setIsEditModalOpen(false);
-        alert("✅ Issue updated successfully!");
+        toast("✅ Issue updated successfully!");
       })
       .catch((err) => {
         console.error(err);
-        alert("❌ Failed to update issue");
+        toast("❌ Failed to update issue");
       });
   };
 
@@ -65,11 +66,11 @@ const MyIssues = () => {
       .then(() => {
         setMyIssus((prev) => prev.filter((issue) => issue._id !== id));
         setIsDeleteModalOpen(false);
-        alert("🗑 Issue deleted successfully!");
+        toast("🗑 Issue deleted successfully!");
       })
       .catch((err) => {
         console.error(err);
-        alert("❌ Failed to delete issue");
+        toast("❌ Failed to delete issue");
       });
   };
 

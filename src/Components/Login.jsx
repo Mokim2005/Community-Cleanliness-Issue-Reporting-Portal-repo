@@ -74,24 +74,27 @@ const Login = () => {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-2 top-2"
+              className="absolute right-2 top-2 cursor-pointer"
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
-          <button type="submit" className="w-full p-2 bg-blue-600 rounded">
+          <button
+            type="submit"
+            className="w-full p-2 bg-blue-600 rounded cursor-pointer"
+          >
             Login
           </button>
         </form>
         <button
           onClick={handleGoogleSignIn}
-          className="w-full mt-2 p-2 bg-red-600 rounded"
+          className="w-full mt-2 p-2 bg-red-600 rounded cursor-pointer"
         >
           Sign in with Google
         </button>
         <p className="mt-4">
           New user?{" "}
-          <Link to="/register" className="text-blue-400">
+          <Link to="/register" className="text-blue-400 cursor-pointer">
             Register
           </Link>
         </p>
