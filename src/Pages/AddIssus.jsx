@@ -64,7 +64,7 @@ const AddIssus = () => {
               type="text"
               name="title"
               placeholder="Enter issue title"
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full p-3 border border-amber-300 text-primary rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
               required
             />
           </div>
@@ -76,7 +76,7 @@ const AddIssus = () => {
             <select
               name="category"
               required
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full p-3 border border-amber-300 text-primary rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
             >
               <option value="">Select category</option>
               <option value="Garbage">Garbage</option>
@@ -94,20 +94,20 @@ const AddIssus = () => {
               type="text"
               name="location"
               placeholder="e.g., Tejgaon, Dhaka"
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full p-3 border border-amber-300 text-primary rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
               required
             />
           </div>
 
           <div>
-            <label className="block font-medium text-gray-700 mb-1">
+            <label className="block font-medium  text-primary mb-1">
               Description
             </label>
             <textarea
               name="description"
               rows="4"
               placeholder="Describe the issue..."
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full p-3 border border-amber-300 text-primary rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
               required
             ></textarea>
           </div>
@@ -120,7 +120,7 @@ const AddIssus = () => {
               type="url"
               name="image"
               placeholder="https://example.com/image.jpg"
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full p-3 border border-amber-300 text-primary rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
               required
             />
           </div>
@@ -133,7 +133,7 @@ const AddIssus = () => {
               type="number"
               name="amount"
               placeholder="Enter estimated amount"
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full p-3 border border-amber-300 text-primary rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
             />
           </div>
 
@@ -146,7 +146,7 @@ const AddIssus = () => {
               name="email"
               value={user?.email || ""}
               disabled
-              className="w-full p-3 border rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed"
+              className="w-full p-3 border border-amber-300 text-primary rounded-lg bg-gray-100 cursor-not-allowed"
             />
           </div>
 
@@ -154,7 +154,7 @@ const AddIssus = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             type="submit"
-            className="w-full bg-gradient-to-r from-green-400 to-emerald-600 text-white font-semibold py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
+            className="w-full bg-gradient-to-r from-green-400 to-emerald-600 text-primary font-semibold py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
           >
             🚮 Submit Issue
           </motion.button>

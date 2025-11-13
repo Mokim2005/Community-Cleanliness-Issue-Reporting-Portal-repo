@@ -106,15 +106,15 @@ const MyIssues = () => {
                   key={issue._id}
                   className="border-b hover:bg-blue-50 transition-all"
                 >
-                  <td className="py-3 px-4 font-semibold">{issue.title}</td>
-                  <td className="py-3 px-4">{issue.category}</td>
-                  <td className="py-3 px-4 text-gray-700">৳{issue.amount}</td>
+                  <td className="py-3 px-4 text-primary font-semibold">{issue.title}</td>
+                  <td className="py-3 text-primary px-4">{issue.category}</td>
+                  <td className="py-3 px-4 text-primary">৳{issue.amount}</td>
                   <td className="py-3 px-4">
                     <span
                       className={`px-3 py-1 rounded-full text-sm font-medium ${
                         issue.status === "ongoing"
-                          ? "bg-yellow-100 text-yellow-800"
-                          : "bg-green-100 text-green-800"
+                          ? "bg-yellow-300 text-yellow-800"
+                          : "bg-green-300 text-green-800"
                       }`}
                     >
                       {issue.status}

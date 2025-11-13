@@ -22,7 +22,7 @@ const Footer = () => {
 
         {/* --- Quick Links --- */}
         <div>
-          <h6 className="text-lg font-semibold mb-3 text-gray-800">
+          <h6 className="text-lg font-semibold mb-3 text-primary  hover:text-green-600">
             Quick Links
           </h6>
           <ul className="space-y-2 text-gray-600">
@@ -63,7 +63,7 @@ const Footer = () => {
 
         {/* --- About --- */}
         <div>
-          <h6 className="text-lg font-semibold mb-3 text-gray-800">About</h6>
+          <h6 className="text-lg font-semibold mb-3 text-primary  hover:text-green-600">About</h6>
           <ul className="space-y-2 text-gray-600">
             <li>
               <a className="hover:text-primary transition-colors duration-200">
@@ -90,7 +90,7 @@ const Footer = () => {
 
         {/* --- Social Media --- */}
         <div>
-          <h6 className="text-lg font-semibold mb-3 text-gray-800">
+          <h6 className="text-lg font-semibold mb-3 text-primary  hover:text-green-600">
             Connect With Us
           </h6>
           <p className="text-gray-600 text-sm mb-3">
@@ -131,7 +131,7 @@ const Footer = () => {
       </div>
 
       {/* --- Bottom Section --- */}
-      <div className="border-t border-gray-300 mt-10 pt-4 text-center text-gray-600 text-sm">
+      <div className="border-t border-gray-300 mt-10 pt-4 text-center text-primary  hover:text-green-600 text-sm">
         © {new Date().getFullYear()}{" "}
         <span className="font-semibold">CleanCity</span> — All Rights Reserved.
         <br />
