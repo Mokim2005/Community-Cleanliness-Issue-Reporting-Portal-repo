@@ -18,7 +18,9 @@ const IssueDetails = () => {
 
   // Fetch contributors on page load
   useEffect(() => {
-    fetch(`http://localhost:3000/contributions?issueId=${_id}`)
+    fetch(
+      `https://community-cleanliness-issue-reporti.vercel.app/contributions?issueId=${_id}`
+    )
       .then((res) => res.json())
       .then((data) => setContributors(data))
       .catch((err) => console.error(err));
@@ -43,11 +45,14 @@ const IssueDetails = () => {
     };
     console.log(contributionData, "from details page");
     // Send to backend
-    fetch(`http://localhost:3000/contributions`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(contributionData),
-    })
+    fetch(
+      `https://community-cleanliness-issue-reporti.vercel.app/contributions`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(contributionData),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         alert("✅ Contribution Successful!");

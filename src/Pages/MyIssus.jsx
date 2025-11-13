@@ -37,17 +37,22 @@ const MyIssues = () => {
       status: form.status.value,
     };
 
-    fetch(`http://localhost:3000/issues/${selectedIssue._id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedData),
-    })
+    fetch(
+      `https://community-cleanliness-issue-reporti.vercel.app/issues/${selectedIssue._id}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedData),
+      }
+    )
       .then((res) => res.json())
       .then(() => {
         // Update frontend state
         setMyIssus((prev) =>
           prev.map((issue) =>
-            issue._id === selectedIssue._id ? { ...issue, ...updatedData } : issue
+            issue._id === selectedIssue._id
+              ? { ...issue, ...updatedData }
+              : issue
           )
         );
         setIsEditModalOpen(false);
@@ -61,7 +66,10 @@ const MyIssues = () => {
 
   // 🔹 Delete issue
   const handleDelete = (id) => {
-    fetch(`http://localhost:3000/issues/${id}`, { method: "DELETE" })
+    fetch(
+      `https://community-cleanliness-issue-reporti.vercel.app/issues/${id}`,
+      { method: "DELETE" }
+    )
       .then((res) => res.json())
       .then(() => {
         setMyIssus((prev) => prev.filter((issue) => issue._id !== id));
@@ -106,7 +114,9 @@ const MyIssues = () => {
                   key={issue._id}
                   className="border-b hover:bg-blue-50 transition-all"
                 >
-                  <td className="py-3 px-4 text-primary font-semibold">{issue.title}</td>
+                  <td className="py-3 px-4 text-primary font-semibold">
+                    {issue.title}
+                  </td>
                   <td className="py-3 text-primary px-4">{issue.category}</td>
                   <td className="py-3 px-4 text-primary">৳{issue.amount}</td>
                   <td className="py-3 px-4">

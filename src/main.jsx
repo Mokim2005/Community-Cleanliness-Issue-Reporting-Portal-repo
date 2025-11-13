@@ -17,7 +17,6 @@ import PrivateRoute from "./Components/PrivateRout.jsx";
 import MyIssus from "./Pages/MyIssus.jsx";
 import { ThemeProvider } from "next-themes";
 
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,12 +25,16 @@ const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
-        loader: () => fetch("http://localhost:3000/issus-single/latest"),
+        loader: () =>
+          fetch(
+            "https://community-cleanliness-issue-reporti.vercel.app/issus-single/latest"
+          ),
       },
       {
         path: "/issus",
         Component: Issus,
-        loader: () => fetch(`http://localhost:3000/issus`),
+        loader: () =>
+          fetch(`https://community-cleanliness-issue-reporti.vercel.app/issus`),
       },
 
       {
@@ -58,7 +61,9 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/issus/${params.id}`),
+          fetch(
+            `https://community-cleanliness-issue-reporti.vercel.app/issus/${params.id}`
+          ),
       },
       {
         path: "/myContribution",
@@ -67,7 +72,10 @@ const router = createBrowserRouter([
             <MyContribution></MyContribution>
           </PrivateRoute>
         ),
-        loader: () => fetch("http://localhost:3000/contributions"),
+        loader: () =>
+          fetch(
+            "https://community-cleanliness-issue-reporti.vercel.app/contributions"
+          ),
       },
       {
         path: "/myIssus",
@@ -76,7 +84,8 @@ const router = createBrowserRouter([
             <MyIssus></MyIssus>
           </PrivateRoute>
         ),
-        loader: () => fetch("http://localhost:3000/issus"),
+        loader: () =>
+          fetch("https://community-cleanliness-issue-reporti.vercel.app/issus"),
       },
       {
         path: "*",

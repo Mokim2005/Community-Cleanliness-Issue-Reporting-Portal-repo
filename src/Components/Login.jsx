@@ -33,15 +33,18 @@ const Login = () => {
       const user = result.user;
 
       // Save to backend
-      await fetch("http://localhost:3000/user", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: user.displayName,
-          email: user.email,
-          photo: user.photoURL,
-        }),
-      });
+      await fetch(
+        "https://community-cleanliness-issue-reporti.vercel.app/user",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: user.displayName,
+            email: user.email,
+            photo: user.photoURL,
+          }),
+        }
+      );
 
       Swal.fire("Success", "Logged in with Google!", "success");
       navigate(from, { replace: true });

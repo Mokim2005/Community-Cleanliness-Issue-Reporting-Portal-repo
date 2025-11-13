@@ -25,11 +25,14 @@ const Register = () => {
       await createUser(email, password);
 
       // Save to backend
-      const res = await fetch("http://localhost:3000/user", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, photo }),
-      });
+      const res = await fetch(
+        "https://community-cleanliness-issue-reporti.vercel.app/user",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, photo }),
+        }
+      );
       const data = await res.json();
       if (!data.success) return alert(data.message);
 
@@ -47,15 +50,18 @@ const Register = () => {
       const user = result.user;
 
       // Send to backend
-      await fetch("http://localhost:3000/user", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: user.displayName,
-          email: user.email,
-          photo: user.photoURL,
-        }),
-      });
+      await fetch(
+        "https://community-cleanliness-issue-reporti.vercel.app/user",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: user.displayName,
+            email: user.email,
+            photo: user.photoURL,
+          }),
+        }
+      );
 
       Swal.fire("Success", "Logged in with Google!", "success");
       navigate("/");
@@ -106,7 +112,10 @@ const Register = () => {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
-          <button type="submit" className="w-full p-2 bg-blue-600 rounded cursor-pointer">
+          <button
+            type="submit"
+            className="w-full p-2 bg-blue-600 rounded cursor-pointer"
+          >
             Register
           </button>
         </form>

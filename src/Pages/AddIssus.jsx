@@ -20,11 +20,14 @@ const AddIssus = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:3000/issus", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        "https://community-cleanliness-issue-reporti.vercel.app/issus",
+        {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({...formData, status:"ongoing"}),
+        }
+      );
 
       if (!res.ok) throw new Error("Server error");
 
