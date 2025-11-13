@@ -7,13 +7,14 @@ import { FaSun, FaMoon } from "react-icons/fa";
 const Navber = () => {
   const { user, logOut } = use(AuthContext);
   const [theme, setTheme] = useState("light");
-  console.log('this is navber user info'.user)
+  console.log("this is navber user info".user);
 
   // Load theme on mount
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") || "light";
     setTheme(savedTheme);
     document.documentElement.setAttribute("data-theme", savedTheme);
+    localStorage.setItem("theme", theme);
   }, []);
 
   // Toggle theme

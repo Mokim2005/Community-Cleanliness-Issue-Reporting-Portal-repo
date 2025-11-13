@@ -16,6 +16,7 @@ import MyContribution from "./Pages/MyContribution.jsx";
 import PrivateRoute from "./Components/PrivateRout.jsx";
 import MyIssus from "./Pages/MyIssus.jsx";
 import { ThemeProvider } from "next-themes";
+import LatestIssus from "./Components/LatestIssus.jsx";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,11 @@ const router = createBrowserRouter([
         path: "/issus",
         Component: Issus,
         loader: () => fetch(`http://localhost:3000/issus`),
+      },
+      {
+        path: "/issues/latest",
+        Component: LatestIssus,
+        loader: ''
       },
       {
         path: "/login",
@@ -85,7 +91,7 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <ThemeProvider attribute='class' defaultTheme="light">
+    <ThemeProvider attribute="class" defaultTheme="light">
       <AuthProvider>
         <RouterProvider router={router} />
       </AuthProvider>
