@@ -5,6 +5,8 @@ import Cards from "../Components/Card";
 import TotalUser from "../Components/TotalUser";
 import { ToastContainer } from "react-toastify";
 
+import LatestIssus from "../Components/LatestIssus";
+
 const Home = () => {
   return (
     <div>
@@ -12,7 +14,9 @@ const Home = () => {
       <Banner></Banner>
       <TotalUser></TotalUser>
       <Slider></Slider>
+
       <Cards></Cards>
+      <LatestIssus></LatestIssus>
       <ToastContainer></ToastContainer>
     </div>
   );

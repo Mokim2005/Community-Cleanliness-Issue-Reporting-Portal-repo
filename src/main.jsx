@@ -35,7 +35,7 @@ const router = createBrowserRouter([
       {
         path: "/issues/latest",
         Component: LatestIssus,
-        loader: ''
+        loader:()=>fetch('http://localhost:3000/issus-single/latest') ,
       },
       {
         path: "/login",

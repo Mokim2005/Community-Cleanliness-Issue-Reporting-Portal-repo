@@ -32,7 +32,7 @@ const Slider = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-[400px] overflow-hidden rounded-2xl shadow-lg">
+    <div className="relative w-full h-[400px] overflow-hidden  shadow-lg">
       <AnimatePresence mode="wait">
         <motion.img
           key={slides[current].id}

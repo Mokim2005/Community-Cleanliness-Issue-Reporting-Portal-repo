@@ -12,7 +12,7 @@ const TotalUser = () => {
   }, []);
 
   return (
-    <div className="flex justify-center items-center min-h-[200px] bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-600 rounded-2xl shadow-xl p-6 text-white text-center">
+    <div className="flex justify-center items-center min-h-[200px] bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-600  shadow-xl p-6 text-white text-center">
       <div className="space-y-3">
         <div className="flex justify-center">
           <FaUsers className="text-5xl animate-bounce" />
