@@ -25,7 +25,7 @@ const IssueCard = ({ issus }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
       whileHover={{ scale: 1.03 }}
-      className="max-w-sm w-full bg-gradient-to-br from-green-50 to-green-100 shadow-lg rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 mx-auto"
+      className="max-w-sm w-full h-105 bg-gradient-to-br from-green-50 to-green-100 shadow-lg rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 mx-auto"
     >
       {/* Image Section */}
       <div className="relative">
