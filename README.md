@@ -8,12 +8,12 @@ The application emphasizes **clean UI with Tailwind CSS**, **secured routes usin
 
 ---
 
-## Live Demo
+## Live Demo:https://funny-bienenstitch-9771d8.netlify.app/
 
 [Insert your live website URL here]
-
+https://funny-bienenstitch-9771d8.netlify.app/
 ---
-
+sever link: https://community-cleanliness-issue-reporti.vercel.app
 ## Features Implemented
 
 ### Authentication

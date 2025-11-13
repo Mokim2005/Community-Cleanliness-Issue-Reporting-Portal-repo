@@ -25,7 +25,7 @@ const JoinCleanDrive = () => {
         {/* Image or Illustration */}
         <div className="md:w-1/2">
           <img
-            src="https://images.unsplash.com/photo-1596495577886-d920f1b3c7b2?auto=format&fit=crop&w=800&q=80"
+            src="https://i.ibb.co.com/zHbY9fDK/garbage-dump-pile-in-trash-dump-or-landfill-backhoe-and-truck-is-dumping-the-gabage-from-municipal-g.jpg"
             alt="Community Clean Drive"
             className="w-full rounded-lg shadow-lg"
           />
