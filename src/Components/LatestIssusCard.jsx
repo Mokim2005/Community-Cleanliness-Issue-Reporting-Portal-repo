@@ -54,4 +54,4 @@ const LatestIssusCard = ({ data }) => {
   );
 };
 
-export default LatestIssusCard;
+export default LatestIssusCard

@@ -7,7 +7,7 @@ import { ToastContainer } from "react-toastify";
 
 import { useLoaderData } from "react-router";
 import LatestIssusCard from "../Components/LatestIssusCard";
-
+import VolunteerCTA from "../Components/VolunteerCTA";
 
 const Home = () => {
   const latestData = useLoaderData();
@@ -16,6 +16,7 @@ const Home = () => {
       <title>Home</title>
       <Banner></Banner>
       <TotalUser></TotalUser>
+      {/* <VolunteerCTA></VolunteerCTA> */}
       <Slider></Slider>
       <Cards></Cards>
       <ToastContainer></ToastContainer>
