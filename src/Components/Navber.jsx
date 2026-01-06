@@ -29,12 +29,12 @@ const handleLogOut = () => {
       text: "You will be logged out of your session!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3b82f6", // Primary Blue
-      cancelButtonColor: "#ef4444",  // Error Red
+      confirmButtonColor: "#3b82f6", 
+      cancelButtonColor: "#ef4444", 
       confirmButtonText: "Yes, Logout!",
-      background: "#0f172a",         // ডার্ক থিমের সাথে ম্যাচিং ব্যাকগ্রাউন্ড
-      color: "#fff",                 // সাদা টেক্সট
-      backdrop: `rgba(0,0,123,0.1)`  // হালকা ব্লু ব্যাকড্রপ
+      background: "#0f172a",         
+      color: "#fff",                 
+      backdrop: `rgba(0,0,123,0.1)`  
     }).then((result) => {
       if (result.isConfirmed) {
         logOut()
@@ -93,10 +93,15 @@ const handleLogOut = () => {
               {({ isActive }) => (<>My Issues {linkIndicator(isActive)}</>)}
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/myContribution" className={navLinkStyles}>
+              {({ isActive }) => (<>My Contribution {linkIndicator(isActive)}</>)}
+            </NavLink>
+          </li>
         </>
       )}
       <li>
-        <NavLink to="/about" className={navLinkStyles}>
+        <NavLink to="/aboutUs" className={navLinkStyles}>
           {({ isActive }) => (<>About Us {linkIndicator(isActive)}</>)}
         </NavLink>
       </li>

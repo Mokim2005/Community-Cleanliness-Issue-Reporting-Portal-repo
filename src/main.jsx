@@ -16,6 +16,7 @@ import MyContribution from "./Pages/MyContribution.jsx";
 import PrivateRoute from "./Components/PrivateRout.jsx";
 import MyIssus from "./Pages/MyIssus.jsx";
 import { ThemeProvider } from "next-themes";
+import AboutUs from "./Pages/AboutUs.jsx";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,11 @@ const router = createBrowserRouter([
         Component: Issus,
         loader: () =>
           fetch(`https://community-cleanliness-issue-reporti.vercel.app/issus`),
+      },
+      {
+        path: "/aboutUs",
+        Component: AboutUs,
+      
       },
 
       {

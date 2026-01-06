@@ -1,9 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useLoaderData } from "react-router";
 import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, Tag, CalendarDays, DollarSign, FileText } from "lucide-react";
+import {
+  MapPin,
+  CalendarDays,
+  DollarSign,
+  FileText,
+  X,
+  Send,
+} from "lucide-react";
 import { AuthContext } from "../Context/AuthContext";
 import DetailsTable from "./DetailsTable";
+import Swal from "sweetalert2";
 
 const IssueDetails = () => {
   const issue = useLoaderData();
@@ -16,7 +24,6 @@ const IssueDetails = () => {
   const { title, category, location, description, image, amount, date, _id } =
     data || {};
 
-  // Fetch contributors on page load
   useEffect(() => {
     fetch(
       `https://community-cleanliness-issue-reporti.vercel.app/contributions?issueId=${_id}`
@@ -26,25 +33,24 @@ const IssueDetails = () => {
       .catch((err) => console.error(err));
   }, [_id]);
 
-  // Handle form submission
   const handleContribution = (e) => {
     e.preventDefault();
     const form = e.target;
 
     const contributionData = {
       issueId: _id,
-      title: form.title.value,
-      category: form.category.value,
+      title: title,
+      category: category,
       amount: form.amount.value,
       contributorName: form.name.value,
-      email: form.email.value,
+      email: user?.email,
       phone: form.phone.value,
       address: form.address.value,
       date: new Date().toLocaleDateString(),
       additionalInfo: form.info.value,
+      photoURL: user?.photoURL,
     };
-    console.log(contributionData, "from details page");
-    // Send to backend
+
     fetch(
       `https://community-cleanliness-issue-reporti.vercel.app/contributions`,
       {
@@ -54,201 +60,182 @@ const IssueDetails = () => {
       }
     )
       .then((res) => res.json())
-      .then((data) => {
-        alert("✅ Contribution Successful!");
+      .then(() => {
+        Swal.fire({
+          title: "Contribution Successful!",
+          text: "Thank you for supporting a cleaner community.",
+          icon: "success",
+          background: "#0f172a",
+          color: "#fff",
+          confirmButtonColor: "#10b981",
+        });
         setIsOpen(false);
-
         form.reset();
-
-        // 🔹 Update contributors state instantly
         setContributors((prev) => [...prev, contributionData]);
       })
-      .catch((err) => console.error(err));
+      .catch(() => {
+        Swal.fire("Error", "Something went wrong!", "error");
+      });
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      className="min-h-screen bg-gradient-to-b from-green-50 to-emerald-100 flex justify-center items-center p-5"
-    >
-      <title>Issus Details</title>
-      <motion.div
-        initial={{ scale: 0.95 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 0.6 }}
-        className="max-w-3xl w-full bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden border border-green-200"
-      >
-        {/* Image Section */}
-        <motion.img
-          src={image}
-          alt={title}
-          className="w-full h-64 object-cover"
-          initial={{ scale: 1.1 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 1.2 }}
-        />
+    <div className="min-h-screen py-12 px-4 md:px-8 relative overflow-hidden bg-[#050b18]">
+      <title>{title} | Details</title>
 
-        {/* Content Section */}
-        <div className="p-6 space-y-5">
-          <h1 className="text-3xl font-bold text-green-800 text-center">
-            {title}
-          </h1>
+      {/* Background Decor */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none"></div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex items-center gap-2 text-gray-700">
-              <Tag className="text-green-600" size={20} />
-              <span>
-                <strong>Category:</strong> {category}
-              </span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-700">
-              <MapPin className="text-green-600" size={20} />
-              <span>
-                <strong>Location:</strong> {location}
-              </span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-700">
-              <CalendarDays className="text-green-600" size={20} />
-              <span>
-                <strong>Date:</strong> {date}
-              </span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-700">
-              <DollarSign className="text-green-600" size={20} />
-              <span>
-                <strong>Budget:</strong> ৳{amount}
-              </span>
-            </div>
+      <div className="max-w-6xl mx-auto space-y-16 relative z-10">
+        {/* Main Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="grid grid-cols-1 lg:grid-cols-2 bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl"
+        >
+          {/* Left: Image */}
+          <div className="relative h-80 lg:h-auto group overflow-hidden">
+            <img
+              src={image}
+              alt={title}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#050b18]/80 to-transparent"></div>
           </div>
 
-          <div className="flex items-start gap-2 text-gray-700">
-            <FileText className="text-green-600 mt-1" size={20} />
-            <p className="text-gray-700 leading-relaxed">{description}</p>
+          {/* Right: Info */}
+          <div className="p-8 md:p-12 space-y-6">
+            <span className="inline-block bg-emerald-500/10 text-emerald-400 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-emerald-500/20">
+              {category}
+            </span>
+            <h1 className="text-3xl md:text-5xl font-black text-white leading-tight">
+              {title}
+            </h1>
+            <div className="flex items-center gap-2 text-emerald-500 font-bold">
+              <MapPin size={18} />
+              <span>{location}</span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-6 py-6 border-y border-white/5">
+              <div>
+                <p className="text-[10px] uppercase font-bold text-slate-500 tracking-widest mb-1">
+                  Posted On
+                </p>
+                <p className="text-white font-bold flex items-center gap-2">
+                  <CalendarDays size={14} /> {date}
+                </p>
+              </div>
+              <div>
+                <p className="text-[10px] uppercase font-bold text-slate-500 tracking-widest mb-1">
+                  Target
+                </p>
+                <p className="text-emerald-500 text-2xl font-black italic">
+                  ৳{amount}
+                </p>
+              </div>
+            </div>
+
+            <p className="text-slate-400 leading-relaxed text-sm">
+              {description}
+            </p>
+
+            <button
+              onClick={() => setIsOpen(true)}
+              className="w-full py-4 bg-emerald-500 text-white font-black rounded-2xl shadow-lg shadow-emerald-500/20 hover:bg-emerald-400 transition-all flex justify-center items-center gap-3 tracking-widest uppercase text-xs"
+            >
+              <DollarSign size={18} /> Contribute Now
+            </button>
+          </div>
+        </motion.div>
+
+        {/* Contribution Board */}
+        <div className="space-y-8">
+          <div className="flex items-center gap-4 px-2">
+            <h2 className="text-2xl font-black text-white uppercase tracking-tighter italic">
+              Contribution Board
+            </h2>
+            <div className="h-px flex-grow bg-white/5"></div>
           </div>
 
-          {/* Pay Button */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setIsOpen(true)}
-            className="w-full py-3 bg-gradient-to-r from-green-400 to-emerald-600 text-white text-lg font-semibold rounded-xl shadow-lg hover:shadow-2xl transition-all"
-          >
-            💰 Pay Clean-Up Contribution
-          </motion.button>
+          {/* Table container with fixed hover style */}
+          <div className="bg-white/[0.02] border border-white/10 rounded-[2rem] overflow-hidden">
+            <DetailsTable contributors={contributors} />
+          </div>
         </div>
-      </motion.div>
+      </div>
 
-      {/* ✅ Modal */}
+      {/* Modal - same as before but with consistent colors */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            className="fixed inset-0 bg-black/50 flex justify-center items-center z-50"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
             <motion.div
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 50, opacity: 0 }}
-              transition={{ duration: 0.4 }}
-              className="bg-white rounded-2xl p-8 w-[90%] md:w-[500px] shadow-2xl space-y-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+              className="absolute inset-0 bg-[#050b18]/90 backdrop-blur-md"
+            />
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-[#0f172a] border border-white/10 w-full max-w-lg rounded-[2.5rem] p-8 relative z-10 shadow-3xl"
             >
-              <h2 className="text-2xl font-bold text-green-700 text-center mb-3">
-                Contribute to Clean-Up 💚
-              </h2>
-
+              <div className="flex justify-between mb-6">
+                <h2 className="text-2xl font-black text-white italic tracking-tight">
+                  Support Community
+                </h2>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="text-slate-500 hover:text-white"
+                >
+                  <X />
+                </button>
+              </div>
               <form onSubmit={handleContribution} className="space-y-4">
-                <input
-                  type="text"
-                  name="title"
-                  value={title}
-                  readOnly
-                  className="w-full p-3 border rounded-lg bg-gray-100"
-                />
                 <input
                   type="number"
                   name="amount"
-                  placeholder="Enter amount (৳)"
-                  className="w-full p-3 border rounded-lg"
+                  placeholder="Amount (৳)"
                   required
+                  className="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-emerald-500"
                 />
                 <input
                   type="text"
                   name="name"
-                  placeholder="Contributor Name"
-                  className="w-full p-3 border rounded-lg"
+                  placeholder="Full Name"
                   required
-                />
-                <input
-                  type="email"
-                  name="email"
-                  value={user?.email || ""}
-                  readOnly
-                  className="w-full p-3 border rounded-lg bg-gray-100"
-                />
-
-                <input
-                  name="photoURL"
-                  type="text"
-                  className="input"
-                  placeholder="PhotoURL"
-                  required
+                  className="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-emerald-500"
                 />
                 <input
                   type="text"
                   name="phone"
                   placeholder="Phone Number"
-                  className="w-full p-3 border rounded-lg"
                   required
-                />
-                <input
-                  type="text"
-                  name="category"
-                  placeholder="Category"
-                  value={category || ""}
-                  readOnly
-                  className="w-full p-3 border rounded-lg"
+                  className="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-emerald-500"
                 />
                 <input
                   type="text"
                   name="address"
                   placeholder="Address"
-                  className="w-full p-3 border rounded-lg"
                   required
+                  className="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-emerald-500"
                 />
                 <textarea
                   name="info"
-                  placeholder="Additional info (optional)"
-                  className="w-full p-3 border rounded-lg"
-                ></textarea>
-
-                <div className="flex justify-between">
-                  <button
-                    type="button"
-                    onClick={() => setIsOpen(false)}
-                    className="px-5 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 transition"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-5 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
-                  >
-                    Submit
-                  </button>
-                </div>
+                  rows="2"
+                  placeholder="Message (Optional)"
+                  className="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-emerald-500 resize-none"
+                />
+                <button className="w-full py-4 bg-emerald-500 text-white font-black rounded-xl uppercase tracking-widest text-xs">
+                  Confirm Support
+                </button>
               </form>
             </motion.div>
-          </motion.div>
+          </div>
         )}
       </AnimatePresence>
-
-      {/* 🔹 Contributors Table outside modal */}
-      <DetailsTable contributors={contributors} />
-    </motion.div>
+    </div>
   );
 };
 

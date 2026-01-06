@@ -1,22 +1,26 @@
-import React, { use } from "react";
+import React, { useContext } from "react";
 import { motion } from "framer-motion";
 import { AuthContext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
+import { FaTag, FaMapMarkerAlt, FaAlignLeft, FaLink, FaMoneyBillWave, FaEnvelope } from "react-icons/fa";
 
 const AddIssus = () => {
-  const { user } = use(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const form = e.target;
 
     const formData = {
-      title: e.target.title.value,
-      category: e.target.category.value,
-      location: e.target.location.value,
-      description: e.target.description.value,
-      image: e.target.image.value,
-      amount: e.target.amount.value,
-      email: e.target.email.value,
+      title: form.title.value,
+      category: form.category.value,
+      location: form.location.value,
+      description: form.description.value,
+      image: form.image.value,
+      amount: form.amount.value,
+      email: user?.email,
+      date: new Date().toLocaleDateString(),
+      status: "ongoing"
     };
 
     try {
@@ -25,144 +29,157 @@ const AddIssus = () => {
         {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({...formData, status:"ongoing"}),
+          body: JSON.stringify(formData),
         }
       );
 
       if (!res.ok) throw new Error("Server error");
 
-      const data = await res.json();
-      console.log(data);
-
-      toast("✅ Issue added successfully!");
-
-      e.target.reset();
+      toast.success("✅ Issue added to the mission!");
+      form.reset();
     } catch (error) {
       console.error(error);
-      toast("❌ Failed to add issue. Please try again.");
+      toast.error("❌ Failed to add issue. Please try again.");
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-100 via-emerald-50 to-white flex items-center justify-center py-10 px-4">
-      <title>Add Issue</title>
-      <motion.form
-        onSubmit={handleSubmit}
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="w-full max-w-2xl bg-white/80 backdrop-blur-md shadow-xl rounded-2xl p-8 space-y-6 border border-green-200"
-      >
-        <h2 className="text-3xl font-bold text-center text-green-700 mb-6">
-          🧹 Report a Community Issue
-        </h2>
+    <div className="min-h-screen py-16 px-4 relative overflow-hidden flex items-center justify-center">
+      <title>Report Issue | CleanCity</title>
+      
+      {/* Background Glows */}
+      <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-secondary/10 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-        {/* === Inputs (same as before) === */}
-        <div className="space-y-5">
-          <div>
-            <label className="block font-medium text-gray-700 mb-1">
-              Issue Title
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-3xl bg-white/5 backdrop-blur-2xl border border-white/10 shadow-2xl rounded-[2.5rem] p-8 md:p-12 relative z-10"
+      >
+        <div className="text-center mb-10">
+          <h2 className="text-3xl md:text-5xl font-black text-white mb-4 tracking-tight">
+            Report <span className="text-secondary">Issue</span>
+          </h2>
+          <p className="text-slate-400 font-medium italic">Help us identify cleanliness problems in your community</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          {/* Issue Title */}
+          <div className="space-y-2 md:col-span-2">
+            <label className="text-xs font-bold text-slate-500 ml-1 uppercase flex items-center gap-2">
+              <FaTag className="text-secondary" /> Issue Title
             </label>
             <input
               type="text"
               name="title"
-              placeholder="Enter issue title"
-              className="w-full p-3 border border-amber-300 text-primary rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+              placeholder="e.g. Broken drainage system"
+              className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl focus:outline-none focus:border-secondary transition-all text-white placeholder:text-slate-600"
               required
             />
           </div>
 
-          <div>
-            <label className="block font-medium text-gray-700 mb-1">
-              Category
+          {/* Category */}
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-slate-500 ml-1 uppercase flex items-center gap-2">
+              <FaTag size={12} className="text-secondary" /> Category
             </label>
             <select
               name="category"
               required
-              className="w-full p-3 border border-amber-300 text-primary rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl focus:outline-none focus:border-secondary transition-all text-white appearance-none cursor-pointer"
             >
-              <option value="">Select category</option>
-              <option value="Garbage">Garbage</option>
-              <option value="Drainage">Drainage</option>
-              <option value="Pollution">Pollution</option>
-              <option value="Others">Others</option>
+              <option className="bg-[#0f172a]" value="">Select category</option>
+              <option className="bg-[#0f172a]" value="Garbage">Garbage</option>
+              <option className="bg-[#0f172a]" value="Drainage">Drainage</option>
+              <option className="bg-[#0f172a]" value="Pollution">Pollution</option>
+              <option className="bg-[#0f172a]" value="Others">Others</option>
             </select>
           </div>
 
-          <div>
-            <label className="block font-medium text-gray-700 mb-1">
-              Location
+          {/* Location */}
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-slate-500 ml-1 uppercase flex items-center gap-2">
+              <FaMapMarkerAlt size={12} className="text-secondary" /> Location
             </label>
             <input
               type="text"
               name="location"
-              placeholder="e.g., Tejgaon, Dhaka"
-              className="w-full p-3 border border-amber-300 text-primary rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+              placeholder="Tejgaon, Dhaka"
+              className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl focus:outline-none focus:border-secondary transition-all text-white"
               required
             />
           </div>
 
-          <div>
-            <label className="block font-medium  text-primary mb-1">
-              Description
-            </label>
-            <textarea
-              name="description"
-              rows="4"
-              placeholder="Describe the issue..."
-              className="w-full p-3 border border-amber-300 text-primary rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
-              required
-            ></textarea>
-          </div>
-
-          <div>
-            <label className="block font-medium text-gray-700 mb-1">
-              Image URL
-            </label>
-            <input
-              type="url"
-              name="image"
-              placeholder="https://example.com/image.jpg"
-              className="w-full p-3 border border-amber-300 text-primary rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block font-medium text-gray-700 mb-1">
-              Suggested Fix Budget (৳)
+          {/* Budget */}
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-slate-500 ml-1 uppercase flex items-center gap-2">
+              <FaMoneyBillWave size={12} className="text-secondary" /> Estimated Budget (৳)
             </label>
             <input
               type="number"
               name="amount"
-              placeholder="Enter estimated amount"
-              className="w-full p-3 border border-amber-300 text-primary rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+              placeholder="500"
+              className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl focus:outline-none focus:border-secondary transition-all text-white"
+              required
             />
           </div>
 
-          <div>
-            <label className="block font-medium text-gray-700 mb-1">
-              Your Email
+          {/* Image URL */}
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-slate-500 ml-1 uppercase flex items-center gap-2">
+              <FaLink size={12} className="text-secondary" /> Image URL
+            </label>
+            <input
+              type="url"
+              name="image"
+              placeholder="https://imgur.com/example.jpg"
+              className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl focus:outline-none focus:border-secondary transition-all text-white"
+              required
+            />
+          </div>
+
+          {/* Description */}
+          <div className="space-y-2 md:col-span-2">
+            <label className="text-xs font-bold text-slate-500 ml-1 uppercase flex items-center gap-2">
+              <FaAlignLeft size={12} className="text-secondary" /> Detailed Description
+            </label>
+            <textarea
+              name="description"
+              rows="4"
+              placeholder="Describe the issue in detail..."
+              className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl focus:outline-none focus:border-secondary transition-all text-white resize-none"
+              required
+            ></textarea>
+          </div>
+
+          {/* User Email (Disabled) */}
+          <div className="space-y-2 md:col-span-2">
+            <label className="text-xs font-bold text-slate-500 ml-1 uppercase flex items-center gap-2">
+              <FaEnvelope size={12} className="text-secondary" /> Reporter Email
             </label>
             <input
               type="email"
-              name="email"
               value={user?.email || ""}
               disabled
-              className="w-full p-3 border border-amber-300 text-primary rounded-lg bg-gray-100 cursor-not-allowed"
+              className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl text-slate-500 font-bold cursor-not-allowed italic"
             />
           </div>
 
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            type="submit"
-            className="w-full bg-gradient-to-r from-green-400 to-emerald-600 text-primary font-semibold py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
-          >
-            🚮 Submit Issue
-          </motion.button>
-        </div>
-      </motion.form>
+          {/* Submit Button */}
+          <div className="md:col-span-2 pt-4">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              type="submit"
+              className="w-full py-5 bg-secondary text-secondary-content font-black rounded-2xl shadow-xl shadow-secondary/20 hover:shadow-secondary/40 transition-all uppercase tracking-widest flex justify-center items-center gap-3"
+            >
+              🚀 Submit Issue
+            </motion.button>
+          </div>
+        </form>
+      </motion.div>
     </div>
   );
 };

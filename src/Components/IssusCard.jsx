@@ -1,66 +1,79 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router";
+import { FaMapMarkerAlt, FaCoins, FaArrowRight } from "react-icons/fa";
 
 const IssueCard = ({ issus }) => {
   const { _id, image, title, category, description, amount, location } = issus;
-  console.log(issus);
-  // const data = {
-  //   id: "10",
-  //   title: "Overflowing waste container near bus stop",
-  //   category: "Garbage",
-  //   location: "Tejgaon, Dhaka",
-  //   description:
-  //     "Large waste container near the bus stop is overflowing with garbage.",
-  //   image:
-  //     "https://images.unsplash.com/photo-1590845947725-bd0efb0ed1c0?auto=format&fit=crop&w=800&q=80",
-  //   amount: 200,
-  //   email: "user10@mail.com",
-  //   date: "2025-11-04",
-  // };
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      whileHover={{ scale: 1.03 }}
-      className="max-w-sm w-full h-105 bg-gradient-to-br from-green-50 to-green-100 shadow-lg rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 mx-auto"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      whileHover={{ y: -10 }}
+      className="group relative bg-white/5 backdrop-blur-md border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl hover:shadow-secondary/20 transition-all duration-500"
     >
-      {/* Image Section */}
-      <div className="relative">
-        <img src={image} alt={title} className="w-full h-56 object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-        <span className="absolute bottom-3 left-3 bg-green-500 text-white text-xs px-3 py-1 rounded-full shadow">
-          {category}
-        </span>
-      </div>
-
-      {/* Content */}
-      <div className="p-5">
-        <h2 className="text-lg md:text-xl font-semibold text-gray-800 mb-2">
-          {title}
-        </h2>
-
-        <p className="text-sm text-gray-600 mb-2">
-          📍 <span className="font-medium">{location}</span>
-        </p>
-
-        <p className="text-gray-700 text-sm mb-4 line-clamp-2">{description}</p>
-
-        <div className="flex items-center justify-between">
-          <p className="text-green-700 font-semibold text-base">
-            💰 Amount: ৳{amount}
-          </p>
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="bg-gradient-to-r from-green-400 to-emerald-600 text-white px-4 py-2 rounded-full shadow hover:shadow-md transition-all duration-300 text-sm font-medium"
-          >
-            <Link to={`/issueDetails/${_id}`}>See Details</Link>
-          </motion.button>
+      {/* Image Section with Hover Zoom */}
+      <div className="relative h-60 overflow-hidden">
+        <img
+          src={image}
+          alt={title}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050b18] via-transparent to-transparent opacity-80"></div>
+        
+        {/* Category Badge */}
+        <div className="absolute top-4 left-4">
+          <span className="bg-secondary/20 backdrop-blur-lg border border-secondary/30 text-secondary text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">
+            {category}
+          </span>
         </div>
       </div>
+
+      {/* Content Section */}
+      <div className="p-6 space-y-4">
+        <div className="space-y-2">
+          <h2 className="text-xl font-bold text-white line-clamp-1 group-hover:text-secondary transition-colors duration-300">
+            {title}
+          </h2>
+          
+          <div className="flex items-center gap-2 text-slate-400 text-sm">
+            <FaMapMarkerAlt className="text-secondary" />
+            <span className="font-medium truncate">{location}</span>
+          </div>
+        </div>
+
+        <p className="text-slate-400 text-sm line-clamp-2 leading-relaxed font-medium">
+          {description}
+        </p>
+
+        {/* Bottom Bar: Amount & Button */}
+        <div className="pt-4 flex items-center justify-between border-t border-white/5">
+          <div className="flex flex-col">
+            <span className="text-[10px] text-slate-500 uppercase font-bold tracking-tighter">Budget</span>
+            <div className="flex items-center gap-1.5 text-secondary font-black text-lg">
+              <FaCoins size={14} />
+              <span>৳{amount}</span>
+            </div>
+          </div>
+
+          <Link to={`/issueDetails/${_id}`}>
+            <motion.button
+              whileHover={{ x: 5 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-2 bg-white/10 hover:bg-secondary hover:text-secondary-content px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 border border-white/10 hover:border-transparent"
+            >
+              Details <FaArrowRight />
+            </motion.button>
+          </Link>
+        </div>
+      </div>
+
+      {/* Hover Glow Effect */}
+      <div className="absolute inset-0 border-2 border-transparent group-hover:border-secondary/20 rounded-[2rem] pointer-events-none transition-all duration-500"></div>
     </motion.div>
   );
 };
