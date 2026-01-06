@@ -1,143 +1,117 @@
 import React from "react";
 import logo from "../assets/logo.png";
 import { Link } from "react-router";
-import { FaFacebook, FaXTwitter, FaYoutube, FaLinkedin } from "react-icons/fa6";
+import { FaFacebook, FaXTwitter, FaYoutube, FaLinkedin, FaEnvelope, FaLocationDot, FaPhone } from "react-icons/fa6";
 
 const Footer = () => {
   return (
-    <footer className="bg-base-200 text-base-content pt-10 pb-6 px-6 lg:px-20 mt-10 border-t border-gray-300">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {/* --- Brand Section --- */}
-        <div>
-          <Link to="/" className="flex items-center gap-2 mb-3">
-            <img src={logo} alt="CleanCity Logo" className="w-[60px]" />
-            <h2 className="text-2xl font-bold text-primary">CleanCity</h2>
+    <footer className="relative bg-gradient-to-b from-slate-900 via-slate-950 to-black text-slate-300 pt-16 pb-8 px-6 lg:px-20 mt-20 border-t border-white/5">
+      {/* Background Decorative Glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[1px] bg-gradient-to-r from-transparent via-secondary to-transparent opacity-30"></div>
+
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        
+        {/* --- Brand & Description --- */}
+        <div className="space-y-5">
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="p-2 bg-white/10 rounded-2xl backdrop-blur-md group-hover:scale-110 transition-transform duration-300">
+              <img src={logo} alt="CleanCity Logo" className="w-10 h-10 object-contain" />
+            </div>
+            <h2 className="text-3xl font-black tracking-tighter text-white">
+              Clean<span className="text-secondary">City</span>
+            </h2>
           </Link>
-          <p className="text-sm text-gray-600 leading-relaxed">
-            CleanCity is a community-driven platform dedicated to promoting
-            cleanliness, sustainability, and public awareness. Report issues,
-            contribute to cleanups, and make your city a better place 🌱.
+          <p className="text-sm leading-relaxed text-slate-400">
+            Building a sustainable future through community action. Join our mission to keep our urban spaces clean, green, and healthy for everyone. 🌱
           </p>
+          <div className="flex gap-4 pt-2">
+            {[ 
+              { icon: <FaFacebook />, color: "hover:bg-blue-600", link: "https://facebook.com" },
+              { icon: <FaXTwitter />, color: "hover:bg-slate-700", link: "https://x.com" },
+              { icon: <FaYoutube />, color: "hover:bg-red-600", link: "https://youtube.com" },
+              { icon: <FaLinkedin />, color: "hover:bg-blue-700", link: "https://linkedin.com" }
+            ].map((social, idx) => (
+              <a 
+                key={idx} 
+                href={social.link} 
+                target="_blank" 
+                className={`w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white transition-all duration-300 ${social.color} hover:-translate-y-1 shadow-lg`}
+              >
+                {social.icon}
+              </a>
+            ))}
+          </div>
         </div>
 
-        {/* --- Quick Links --- */}
+        {/* --- Quick Navigation --- */}
         <div>
-          <h6 className="text-lg font-semibold mb-3 text-primary  hover:text-green-600">
-            Quick Links
+          <h6 className="text-white font-bold text-lg mb-6 flex items-center gap-2">
+            <span className="w-2 h-2 bg-secondary rounded-full"></span> Quick Links
           </h6>
-          <ul className="space-y-2 text-gray-600">
-            <li>
-              <Link
-                to="/"
-                className="hover:text-primary transition-colors duration-200"
-              >
-                Home
-              </Link>
+          <ul className="space-y-4 text-sm font-medium">
+            {["Home", "All Issues", "Add Issue", "My Contribution"].map((item) => (
+              <li key={item}>
+                <Link 
+                  to={item === "Home" ? "/" : `/${item.toLowerCase().replace(" ", "")}`} 
+                  className="hover:text-secondary hover:translate-x-2 flex items-center transition-all duration-300"
+                >
+                  <span className="opacity-0 hover:opacity-100 transition-opacity mr-2">→</span> {item}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* --- Support & Contact --- */}
+        <div>
+          <h6 className="text-white font-bold text-lg mb-6 flex items-center gap-2">
+            <span className="w-2 h-2 bg-secondary rounded-full"></span> Contact Info
+          </h6>
+          <ul className="space-y-4 text-sm">
+            <li className="flex items-start gap-3 group">
+              <FaLocationDot className="mt-1 text-secondary group-hover:scale-120 transition-transform" />
+              <span>123 Green Way, Eco District<br />Dhaka, Bangladesh</span>
             </li>
-            <li>
-              <Link
-                to="/issus"
-                className="hover:text-primary transition-colors duration-200"
-              >
-                All Issues
-              </Link>
+            <li className="flex items-center gap-3 group">
+              <FaPhone className="text-secondary group-hover:scale-120 transition-transform" />
+              <span>+880 1234 567 890</span>
             </li>
-            <li>
-              <Link
-                to="/addIssus"
-                className="hover:text-primary transition-colors duration-200"
-              >
-                Add Issue
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/myContribution"
-                className="hover:text-primary transition-colors duration-200"
-              >
-                My Contribution
-              </Link>
+            <li className="flex items-center gap-3 group">
+              <FaEnvelope className="text-secondary group-hover:scale-120 transition-transform" />
+              <span className="hover:text-white cursor-pointer transition-colors">support@cleancity.com</span>
             </li>
           </ul>
         </div>
 
-        {/* --- About --- */}
-        <div>
-          <h6 className="text-lg font-semibold mb-3 text-primary  hover:text-green-600">About</h6>
-          <ul className="space-y-2 text-gray-600">
-            <li>
-              <a className="hover:text-primary transition-colors duration-200">
-                About Us
-              </a>
-            </li>
-            <li>
-              <a className="hover:text-primary transition-colors duration-200">
-                Our Mission
-              </a>
-            </li>
-            <li>
-              <a className="hover:text-primary transition-colors duration-200">
-                Community Support
-              </a>
-            </li>
-            <li>
-              <a className="hover:text-primary transition-colors duration-200">
-                Contact Us
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        {/* --- Social Media --- */}
-        <div>
-          <h6 className="text-lg font-semibold mb-3 text-primary  hover:text-green-600">
-            Connect With Us
+        {/* --- Newsletter/Call to Action --- */}
+        <div className="space-y-5">
+          <h6 className="text-white font-bold text-lg mb-2 flex items-center gap-2">
+            <span className="w-2 h-2 bg-secondary rounded-full"></span> Stay Updated
           </h6>
-          <p className="text-gray-600 text-sm mb-3">
-            Follow us on social media to stay updated on upcoming cleanup
-            events, awareness campaigns, and community drives.
-          </p>
-          <div className="flex items-center gap-4 text-2xl text-gray-600">
-            <Link
-              to="https://x.com/"
-              target="_blank"
-              className="hover:text-primary transition-all duration-200"
-            >
-              <FaXTwitter />
-            </Link>
-            <Link
-              to="https://www.youtube.com/"
-              target="_blank"
-              className="hover:text-error transition-all duration-200"
-            >
-              <FaYoutube />
-            </Link>
-            <Link
-              to="https://www.facebook.com/"
-              target="_blank"
-              className="hover:text-primary transition-all duration-200"
-            >
-              <FaFacebook />
-            </Link>
-            <Link
-              to="https://www.linkedin.com/"
-              target="_blank"
-              className="hover:text-sky-600 transition-all duration-200"
-            >
-              <FaLinkedin />
-            </Link>
+          <p className="text-sm text-slate-400">Get the latest news on cleanup drives and community rewards.</p>
+          <div className="flex flex-col gap-3">
+            <input 
+              type="email" 
+              placeholder="Your Email" 
+              className="bg-white/5 border border-white/10 px-4 py-3 rounded-xl focus:outline-none focus:border-secondary transition-all text-sm w-full"
+            />
+            <button className="bg-secondary hover:bg-secondary/80 text-secondary-content font-bold py-3 rounded-xl transition-all active:scale-95 shadow-lg shadow-secondary/10">
+              Subscribe
+            </button>
           </div>
         </div>
       </div>
 
-      {/* --- Bottom Section --- */}
-      <div className="border-t border-gray-300 mt-10 pt-4 text-center text-primary  hover:text-green-600 text-sm">
-        © {new Date().getFullYear()}{" "}
-        <span className="font-semibold">CleanCity</span> — All Rights Reserved.
-        <br />
-        <span className="text-primary font-medium">
-          Together for a cleaner tomorrow 🌍
-        </span>
+      {/* --- Footer Bottom --- */}
+      <div className="mt-16 pt-8 border-t border-white/5">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-xs tracking-wider uppercase font-semibold text-slate-500">
+          <p>© {new Date().getFullYear()} CleanCity. All rights reserved.</p>
+          <div className="flex gap-6">
+            <span className="hover:text-white cursor-pointer transition-colors">Privacy Policy</span>
+            <span className="hover:text-white cursor-pointer transition-colors">Terms of Service</span>
+          </div>
+          <p className="text-secondary animate-pulse">Together for a greener tomorrow 🌍</p>
+        </div>
       </div>
     </footer>
   );
