@@ -3,6 +3,8 @@ import { NavLink, Link } from "react-router";
 import logo from "../assets/logo.png";
 import { AuthContext } from "../Context/AuthContext";
 import { FaSun, FaMoon, FaSignOutAlt, FaUser, FaCompass, FaPlusSquare, FaHistory } from "react-icons/fa";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const { user, logOut } = React.use(AuthContext); 
@@ -21,10 +23,38 @@ const Navbar = () => {
     localStorage.setItem("theme", newTheme);
   };
 
-  const handleLogOut = () => {
-    logOut()
-      .then(() => alert("Logged out successfully!"))
-      .catch((error) => console.error(error));
+const handleLogOut = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will be logged out of your session!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3b82f6", // Primary Blue
+      cancelButtonColor: "#ef4444",  // Error Red
+      confirmButtonText: "Yes, Logout!",
+      background: "#0f172a",         // ডার্ক থিমের সাথে ম্যাচিং ব্যাকগ্রাউন্ড
+      color: "#fff",                 // সাদা টেক্সট
+      backdrop: `rgba(0,0,123,0.1)`  // হালকা ব্লু ব্যাকড্রপ
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logOut()
+          .then(() => {
+            Swal.fire({
+              title: "Logged Out!",
+              text: "You have been logged out successfully.",
+              icon: "success",
+              background: "#0f172a",
+              color: "#fff",
+              showConfirmButton: false,
+              timer: 1500
+            });
+          })
+          .catch((error) => {
+            console.error(error);
+            toast.error("Logout failed! Please try again.");
+          });
+      }
+    });
   };
 
   // Modern Link Styles with Animated Underline

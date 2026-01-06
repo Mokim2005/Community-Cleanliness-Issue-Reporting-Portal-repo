@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
+import Loading from "./Loading";
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
@@ -17,14 +18,7 @@ const PrivateRoute = ({ children }) => {
 
   // 🌀 Show loading for first 3 seconds or until Firebase auth loads
   if (loading || manualLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen bg-gray-50">
-        <div className="text-center space-y-4">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-600 mx-auto"></div>
-          <p className="text-blue-700 font-semibold text-lg">Checking access...</p>
-        </div>
-      </div>
-    );
+    return <Loading></Loading>;
   }
 
   // ✅ Authenticated → show child route
