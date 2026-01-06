@@ -80,7 +80,7 @@ const IssueDetails = () => {
 
   return (
     <div className="min-h-screen py-12 px-4 md:px-8 relative overflow-hidden bg-[#050b18]">
-      <title>{title} | Details</title>
+      <title>Issues Details</title>
 
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[120px] pointer-events-none"></div>

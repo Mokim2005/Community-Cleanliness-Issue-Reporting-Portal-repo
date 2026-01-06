@@ -1,7 +1,5 @@
-// File: src/Components/TotalUser.jsx
-
 import React, { useEffect, useState } from "react";
-import { FaUsers } from "react-icons/fa";
+import { Users, UserCheck, Activity } from "lucide-react";
 import { motion } from "framer-motion";
 
 const TotalUser = () => {
@@ -15,14 +13,13 @@ const TotalUser = () => {
       .catch((err) => console.error("Error fetching users:", err));
   }, []);
 
-  // Animate number count
   useEffect(() => {
     let start = 0;
     const end = users.length;
     if (end === 0) return;
 
-    const duration = 1000; // 1 second
-    const increment = end / (duration / 20); // update every 20ms
+    const duration = 1500; 
+    const increment = end / (duration / 20);
     const counter = setInterval(() => {
       start += increment;
       if (start >= end) {
@@ -31,61 +28,74 @@ const TotalUser = () => {
       }
       setDisplayCount(Math.floor(start));
     }, 20);
+    return () => clearInterval(counter);
   }, [users]);
 
   return (
-    <div className="relative w-full h-80 overflow-hidden">
-      {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1470&q=80')",
-        }}
-      ></div>
+    <div className="relative py-20 px-6 overflow-hidden bg-[#050b18]">
+      
+      {/* 🔹 Background Effects */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-green-900/70 via-green-700/50 to-transparent"></div>
-
-      {/* Content */}
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-6"
-      >
-        {/* Icon with bounce */}
+      <div className="max-w-4xl mx-auto relative z-10">
         <motion.div
-          className="mb-4"
-          animate={{ scale: [1, 1.15, 1] }}
-          transition={{ repeat: Infinity, duration: 2 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="bg-white/[0.02] backdrop-blur-2xl border border-white/10 rounded-[3rem] p-12 md:p-20 text-center shadow-3xl relative overflow-hidden"
         >
-          <FaUsers className="text-8xl text-white/90" />
+          {/* Decorative Corner Icon */}
+          <Activity className="absolute top-8 right-8 text-emerald-500/20" size={40} />
+
+          {/* Icon with Ring Animation */}
+          <div className="relative inline-block mb-8">
+             <motion.div 
+               animate={{ rotate: 360 }}
+               transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+               className="absolute inset-[-10px] border-2 border-dashed border-emerald-500/30 rounded-full"
+             />
+             <div className="bg-emerald-500 p-6 rounded-full shadow-lg shadow-emerald-500/30">
+                <Users className="text-white text-5xl md:text-6xl" size={48} />
+             </div>
+          </div>
+
+          {/* Heading */}
+          <h2 className="text-slate-400 text-xs md:text-sm font-black uppercase tracking-[0.4em] mb-4">
+            Our Growing Community
+          </h2>
+
+          {/* Animated Number */}
+          <div className="relative inline-block">
+            <motion.h3 
+              key={displayCount}
+              className="text-7xl md:text-9xl font-black text-white tracking-tighter"
+            >
+              {displayCount}
+            </motion.h3>
+            {/* Soft Glow behind number */}
+            <div className="absolute inset-0 blur-2xl bg-emerald-500/20 -z-10"></div>
+          </div>
+
+          <p className="text-xl md:text-2xl font-bold text-slate-200 mt-6 tracking-tight">
+            Registered Citizens <span className="text-emerald-500 italic">Joining the Cause</span>
+          </p>
+
+          {/* Trust Badge */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1 }}
+            className="mt-10 flex items-center justify-center gap-2 text-slate-500 font-bold text-[10px] uppercase tracking-widest"
+          >
+            <UserCheck size={14} className="text-emerald-500" />
+            Active engagement across the city
+          </motion.div>
         </motion.div>
+      </div>
 
-        {/* Title */}
-        <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-wide">
-          Total Registered Users
-        </h2>
-
-        {/* Animated Number */}
-        <motion.p
-          key={displayCount}
-          className="text-7xl md:text-8xl font-extrabold mb-2 text-white/90"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          {displayCount}
-        </motion.p>
-
-        <p className="text-lg md:text-xl opacity-90 text-white/80">
-          People have joined our community 🎉
-        </p>
-      </motion.div>
-
-      {/* Bottom Glow */}
-      <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-green-500/40 to-transparent blur-3xl"></div>
+      {/* Decorative Line */}
+      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
     </div>
   );
 };
