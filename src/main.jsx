@@ -19,6 +19,7 @@ import { ThemeProvider } from "next-themes";
 import AboutUs from "./Pages/AboutUs.jsx";
 import Profile from "./Pages/Profile.jsx";
 import DashboardLayout from "./Layout/DashboardLayout.jsx";
+import DashboardHome from "./Pages/DashboardHome.jsx";
 
 const router = createBrowserRouter([
   {
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
       {
         path: "profile",
         Component: Profile,
+      },
+      {
+        path: "dashboardHome",
+        Component: DashboardHome,
       },
       {
         path: "myContribution",
