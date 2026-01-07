@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 
 const DashboardHome = () => {
-  // ডামি ডাটা (এগুলো আপনি API থেকে আনবেন)
+
   const stats = [
     { id: 1, label: "Total Reports", value: "24", icon: FileText, color: "text-blue-400", bg: "bg-blue-500/10" },
     { id: 2, label: "Resolved", value: "18", icon: CheckCircle2, color: "text-emerald-400", bg: "bg-emerald-500/10" },

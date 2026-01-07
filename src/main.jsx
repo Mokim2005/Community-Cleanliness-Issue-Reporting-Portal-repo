@@ -85,10 +85,6 @@ const router = createBrowserRouter([
         loader: () =>
           fetch("https://community-cleanliness-issue-reporti.vercel.app/issus"),
       },
-      {
-        path: "*",
-        Component: Error,
-      },
     ],
   },
   {
@@ -99,8 +95,8 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
-            {
-       index: true,
+      {
+        index: true,
         Component: DashboardHome,
       },
       {
@@ -117,6 +113,10 @@ const router = createBrowserRouter([
           ),
       },
     ],
+  },
+  {
+    path: "*",
+    Component: Error,
   },
 ]);
 

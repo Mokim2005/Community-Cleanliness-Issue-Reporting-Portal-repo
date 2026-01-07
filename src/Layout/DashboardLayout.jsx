@@ -5,21 +5,12 @@ import { Link, NavLink, Outlet } from "react-router";
 
 import logo from "../assets/logo.png";
 import { FaHome, FaUsers } from "react-icons/fa";
-import { ImProfile } from "react-icons/im";
+
 import { CgProfile } from "react-icons/cg";
 import { SiContributorcovenant } from "react-icons/si";
-import {
-  MdManageAccounts,
-  MdOutlineAppBlocking,
-  MdOutlineAssignmentTurnedIn,
-  MdOutlineViewCarousel,
-} from "react-icons/md";
-import { RiSecurePaymentFill } from "react-icons/ri";
-import { GiCloverSpiked } from "react-icons/gi";
 
 const DashboardLayout = () => {
-//   const { role } = UseRole();
-//   console.log("this is role", role);
+
 
   return (
     <div className="drawer lg:drawer-open max-w-7xl mx-auto">
@@ -91,114 +82,6 @@ const DashboardLayout = () => {
               </NavLink>
             </li>
             
-
-            {/* ================= ADMIN ================= */}
-            {/* {role === "admin" && (
-              <>
-                <li>
-                  <NavLink
-                    to="/dashboard/all-issus-table"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip=" View All Issues"
-                  >
-                    <MdOutlineViewCarousel />
-                    <span className="is-drawer-close:hidden">
-                      View All Issues
-                    </span>
-                  </NavLink>
-                </li>
-
-                <li>
-                  <NavLink
-                    to="/dashboard/manage-staff"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Manage staff"
-                  >
-                    <MdManageAccounts />
-                    <span className="is-drawer-close:hidden">Manage Staff</span>
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/dashboard/my-profile"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="My Profile"
-                  >
-                    <ImProfile />
-                    <span className="is-drawer-close:hidden">My Profile</span>
-                  </NavLink>
-                </li>
-
-                <li>
-                  <NavLink
-                    to="/dashboard/user-block-manage"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="User Block Manage"
-                  >
-                    <MdOutlineAppBlocking />
-                    <span className="is-drawer-close:hidden">
-                      User Block Manage
-                    </span>
-                  </NavLink>
-                </li>
-
-                <li>
-                  <NavLink
-                    to="/dashboard/user-management"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="User Management"
-                  >
-                    <FaUsers />
-                    <span className="is-drawer-close:hidden">
-                      User Management
-                    </span>
-                  </NavLink>
-                </li>
-
-                <li>
-                  <NavLink
-                    to="/dashboard/view-payments"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="View Payments"
-                  >
-                    <RiSecurePaymentFill />
-                    <span className="is-drawer-close:hidden">
-                      View Payments
-                    </span>
-                  </NavLink>
-                </li>
-              </>
-            )}
-
-            {/* ================= STAFF ================= */}
-            {/* {role === "staff" && (
-              <>
-                <li>
-                  <NavLink
-                    to="/dashboard/assigned-issues"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="Assigned Issues"
-                  >
-                    <MdOutlineAssignmentTurnedIn />
-                    <span className="is-drawer-close:hidden">
-                      Assigned Issues
-                    </span>
-                  </NavLink>
-                </li>
-
-                <li>
-                  <NavLink
-                    to="/dashboard/my-profile"
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="My Profile"
-                  >
-                    <ImProfile />
-                    <span className="is-drawer-close:hidden">My Profile</span>
-                  </NavLink>
-                </li>
-              </>
-            )} */}
-
       
           </ul>
         </div>

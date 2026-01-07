@@ -18,7 +18,7 @@ const TotalUser = () => {
     const end = users.length;
     if (end === 0) return;
 
-    const duration = 1500; 
+    const duration = 1500;
     const increment = end / (duration / 20);
     const counter = setInterval(() => {
       start += increment;
@@ -33,7 +33,6 @@ const TotalUser = () => {
 
   return (
     <div className="relative py-20 px-6 overflow-hidden bg-[#050b18]">
-      
       {/* 🔹 Background Effects */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none"></div>
 
@@ -46,18 +45,21 @@ const TotalUser = () => {
           className="bg-white/[0.02] backdrop-blur-2xl border border-white/10 rounded-[3rem] p-12 md:p-20 text-center shadow-3xl relative overflow-hidden"
         >
           {/* Decorative Corner Icon */}
-          <Activity className="absolute top-8 right-8 text-emerald-500/20" size={40} />
+          <Activity
+            className="absolute top-8 right-8 text-emerald-500/20"
+            size={40}
+          />
 
           {/* Icon with Ring Animation */}
           <div className="relative inline-block mb-8">
-             <motion.div 
-               animate={{ rotate: 360 }}
-               transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-               className="absolute inset-[-10px] border-2 border-dashed border-emerald-500/30 rounded-full"
-             />
-             <div className="bg-emerald-500 p-6 rounded-full shadow-lg shadow-emerald-500/30">
-                <Users className="text-white text-5xl md:text-6xl" size={48} />
-             </div>
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-[-10px] border-2 border-dashed border-emerald-500/30 rounded-full"
+            />
+            <div className="bg-emerald-500 p-6 rounded-full shadow-lg shadow-emerald-500/30">
+              <Users className="text-white text-5xl md:text-6xl" size={48} />
+            </div>
           </div>
 
           {/* Heading */}
@@ -67,7 +69,7 @@ const TotalUser = () => {
 
           {/* Animated Number */}
           <div className="relative inline-block">
-            <motion.h3 
+            <motion.h3
               key={displayCount}
               className="text-7xl md:text-9xl font-black text-white tracking-tighter"
             >
@@ -78,11 +80,12 @@ const TotalUser = () => {
           </div>
 
           <p className="text-xl md:text-2xl font-bold text-slate-200 mt-6 tracking-tight">
-            Registered Citizens <span className="text-emerald-500 italic">Joining the Cause</span>
+            Registered Citizens{" "}
+            <span className="text-emerald-500 italic">Joining the Cause</span>
           </p>
 
           {/* Trust Badge */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}

@@ -2,12 +2,21 @@ import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Context/AuthContext";
-import { FaEye, FaEyeSlash, FaUser, FaEnvelope, FaLock, FaImage, FaGoogle } from "react-icons/fa";
+import {
+  FaEye,
+  FaEyeSlash,
+  FaUser,
+  FaEnvelope,
+  FaLock,
+  FaImage,
+  FaGoogle,
+} from "react-icons/fa";
 import { toast } from "react-toastify";
 
 const Register = () => {
   const navigate = useNavigate();
-  const { createUser, signInWithGoogle, updateUserProfile } = useContext(AuthContext);
+  const { createUser, signInWithGoogle, updateUserProfile } =
+    useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -34,17 +43,20 @@ const Register = () => {
     try {
       // 1. Create User
       const result = await createUser(email, password);
-      
+
       // 2. Update Profile (Name & Photo)
       await updateUserProfile(name, photo);
 
       // 3. Save to Backend
-      const res = await fetch("https://community-cleanliness-issue-reporti.vercel.app/user", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, photo, createdAt: new Date() }),
-      });
-      
+      const res = await fetch(
+        "https://community-cleanliness-issue-reporti.vercel.app/user",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, photo, createdAt: new Date() }),
+        }
+      );
+
       const data = await res.json();
 
       Swal.fire({
@@ -55,7 +67,7 @@ const Register = () => {
         color: "#fff",
         confirmButtonColor: "#3b82f6",
       });
-      
+
       navigate("/");
     } catch (err) {
       console.error(err);
@@ -76,16 +88,19 @@ const Register = () => {
       const result = await signInWithGoogle();
       const user = result.user;
 
-      await fetch("https://community-cleanliness-issue-reporti.vercel.app/user", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: user.displayName,
-          email: user.email,
-          photo: user.photoURL,
-          lastLogin: new Date(),
-        }),
-      });
+      await fetch(
+        "https://community-cleanliness-issue-reporti.vercel.app/user",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: user.displayName,
+            email: user.email,
+            photo: user.photoURL,
+            lastLogin: new Date(),
+          }),
+        }
+      );
 
       toast.success(`Welcome ${user.displayName}!`);
       navigate("/");
@@ -102,14 +117,20 @@ const Register = () => {
 
       <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-3xl w-full max-w-lg shadow-2xl relative z-10">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-black text-white mb-2 tracking-tight">Create Account</h1>
-          <p className="text-slate-400">Join CleanCity and make a difference 🌱</p>
+          <h1 className="text-4xl font-black text-white mb-2 tracking-tight">
+            Create Account
+          </h1>
+          <p className="text-slate-400">
+            Join CleanCity and make a difference 🌱
+          </p>
         </div>
 
         <form onSubmit={handleRegister} className="space-y-5">
           {/* Name Field */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-300 ml-1">Full Name</label>
+            <label className="text-sm font-medium text-slate-300 ml-1">
+              Full Name
+            </label>
             <div className="relative group">
               <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors" />
               <input
@@ -124,7 +145,9 @@ const Register = () => {
 
           {/* Photo Field */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-300 ml-1">Profile Photo URL</label>
+            <label className="text-sm font-medium text-slate-300 ml-1">
+              Profile Photo URL
+            </label>
             <div className="relative group">
               <FaImage className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors" />
               <input
@@ -138,7 +161,9 @@ const Register = () => {
 
           {/* Email Field */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-300 ml-1">Email Address</label>
+            <label className="text-sm font-medium text-slate-300 ml-1">
+              Email Address
+            </label>
             <div className="relative group">
               <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors" />
               <input
@@ -153,7 +178,9 @@ const Register = () => {
 
           {/* Password Field */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-300 ml-1">Password</label>
+            <label className="text-sm font-medium text-slate-300 ml-1">
+              Password
+            </label>
             <div className="relative group">
               <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-primary transition-colors" />
               <input
@@ -176,13 +203,21 @@ const Register = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-4 bg-primary hover:bg-primary/80 text-white font-bold rounded-2xl shadow-lg shadow-primary/20 transition-all active:scale-95 flex justify-center items-center ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
+            className={`w-full py-4 bg-primary hover:bg-primary/80 text-white font-bold rounded-2xl shadow-lg shadow-primary/20 transition-all active:scale-95 flex justify-center items-center ${
+              loading ? "opacity-70 cursor-not-allowed" : ""
+            }`}
           >
-            {loading ? <span className="loading loading-spinner loading-sm"></span> : "Register Now"}
+            {loading ? (
+              <span className="loading loading-spinner loading-sm"></span>
+            ) : (
+              "Register Now"
+            )}
           </button>
         </form>
 
-        <div className="divider before:bg-white/10 after:bg-white/10 text-slate-500 text-xs my-6 uppercase tracking-widest font-bold">OR CONTINUE WITH</div>
+        <div className="divider before:bg-white/10 after:bg-white/10 text-slate-500 text-xs my-6 uppercase tracking-widest font-bold">
+          OR CONTINUE WITH
+        </div>
 
         <button
           onClick={handleGoogleSignIn}
@@ -194,7 +229,10 @@ const Register = () => {
 
         <p className="mt-8 text-center text-slate-400">
           Already a member?{" "}
-          <Link to="/login" className="text-secondary font-bold hover:underline decoration-2 underline-offset-4">
+          <Link
+            to="/login"
+            className="text-secondary font-bold hover:underline decoration-2 underline-offset-4"
+          >
             Login here
           </Link>
         </p>

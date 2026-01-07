@@ -7,23 +7,20 @@ import { FaFilter, FaListUl, FaSearch, FaChevronLeft, FaChevronRight } from "rea
 const Issus = () => {
   const data = useLoaderData() || [];
 
-  // 🔹 State for Search and Pagination
+  
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6; // প্রতি পেজে কয়টি কার্ড দেখাবে
+  const itemsPerPage = 6;
 
-  // 🔍 ১. সার্চ লজিক (Title অনুযায়ী ফিল্টার)
   const filteredData = data.filter((item) =>
     item.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // 🔢 ২. পেজিনেশন লজিক
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-
-  // পেজ পরিবর্তন করার হ্যান্ডলার
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
@@ -84,7 +81,7 @@ const Issus = () => {
                 value={searchTerm}
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
-                  setCurrentPage(1); // সার্চ করলে ১ নম্বর পেজে নিয়ে যাবে
+                  setCurrentPage(1); 
                 }}
                 className="w-full bg-white/5 border border-white/10 rounded-2xl py-3 pl-12 pr-4 text-white text-sm focus:outline-none focus:border-emerald-500/50 transition-all"
               />

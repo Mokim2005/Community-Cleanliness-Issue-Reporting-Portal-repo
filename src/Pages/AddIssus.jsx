@@ -2,7 +2,14 @@ import React, { useContext } from "react";
 import { motion } from "framer-motion";
 import { AuthContext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
-import { FaTag, FaMapMarkerAlt, FaAlignLeft, FaLink, FaMoneyBillWave, FaEnvelope } from "react-icons/fa";
+import {
+  FaTag,
+  FaMapMarkerAlt,
+  FaAlignLeft,
+  FaLink,
+  FaMoneyBillWave,
+  FaEnvelope,
+} from "react-icons/fa";
 
 const AddIssus = () => {
   const { user } = useContext(AuthContext);
@@ -20,7 +27,7 @@ const AddIssus = () => {
       amount: form.amount.value,
       email: user?.email,
       date: new Date().toLocaleDateString(),
-      status: "ongoing"
+      status: "ongoing",
     };
 
     try {
@@ -46,7 +53,7 @@ const AddIssus = () => {
   return (
     <div className="min-h-screen py-16 px-4 relative overflow-hidden flex items-center justify-center">
       <title>Report Issue | CleanCity</title>
-      
+
       {/* Background Glows */}
       <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-secondary/10 rounded-full blur-[120px] pointer-events-none"></div>
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
@@ -61,11 +68,15 @@ const AddIssus = () => {
           <h2 className="text-3xl md:text-5xl font-black text-white mb-4 tracking-tight">
             Report <span className="text-secondary">Issue</span>
           </h2>
-          <p className="text-slate-400 font-medium italic">Help us identify cleanliness problems in your community</p>
+          <p className="text-slate-400 font-medium italic">
+            Help us identify cleanliness problems in your community
+          </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          
+        <form
+          onSubmit={handleSubmit}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
           {/* Issue Title */}
           <div className="space-y-2 md:col-span-2">
             <label className="text-xs font-bold text-slate-500 ml-1 uppercase flex items-center gap-2">
@@ -90,11 +101,21 @@ const AddIssus = () => {
               required
               className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl focus:outline-none focus:border-secondary transition-all text-white appearance-none cursor-pointer"
             >
-              <option className="bg-[#0f172a]" value="">Select category</option>
-              <option className="bg-[#0f172a]" value="Garbage">Garbage</option>
-              <option className="bg-[#0f172a]" value="Drainage">Drainage</option>
-              <option className="bg-[#0f172a]" value="Pollution">Pollution</option>
-              <option className="bg-[#0f172a]" value="Others">Others</option>
+              <option className="bg-[#0f172a]" value="">
+                Select category
+              </option>
+              <option className="bg-[#0f172a]" value="Garbage">
+                Garbage
+              </option>
+              <option className="bg-[#0f172a]" value="Drainage">
+                Drainage
+              </option>
+              <option className="bg-[#0f172a]" value="Pollution">
+                Pollution
+              </option>
+              <option className="bg-[#0f172a]" value="Others">
+                Others
+              </option>
             </select>
           </div>
 
@@ -115,7 +136,8 @@ const AddIssus = () => {
           {/* Budget */}
           <div className="space-y-2">
             <label className="text-xs font-bold text-slate-500 ml-1 uppercase flex items-center gap-2">
-              <FaMoneyBillWave size={12} className="text-secondary" /> Estimated Budget (৳)
+              <FaMoneyBillWave size={12} className="text-secondary" /> Estimated
+              Budget (৳)
             </label>
             <input
               type="number"
@@ -143,7 +165,8 @@ const AddIssus = () => {
           {/* Description */}
           <div className="space-y-2 md:col-span-2">
             <label className="text-xs font-bold text-slate-500 ml-1 uppercase flex items-center gap-2">
-              <FaAlignLeft size={12} className="text-secondary" /> Detailed Description
+              <FaAlignLeft size={12} className="text-secondary" /> Detailed
+              Description
             </label>
             <textarea
               name="description"
