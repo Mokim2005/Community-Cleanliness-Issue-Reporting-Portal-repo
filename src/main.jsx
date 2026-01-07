@@ -17,6 +17,8 @@ import PrivateRoute from "./Components/PrivateRout.jsx";
 import MyIssus from "./Pages/MyIssus.jsx";
 import { ThemeProvider } from "next-themes";
 import AboutUs from "./Pages/AboutUs.jsx";
+import Profile from "./Pages/Profile.jsx";
+import DashboardLayout from "./Layout/DashboardLayout.jsx";
 
 const router = createBrowserRouter([
   {
@@ -40,7 +42,6 @@ const router = createBrowserRouter([
       {
         path: "/aboutUs",
         Component: AboutUs,
-      
       },
 
       {
@@ -59,6 +60,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+
       {
         path: "/issueDetails/:id",
         element: (
@@ -71,18 +73,7 @@ const router = createBrowserRouter([
             `https://community-cleanliness-issue-reporti.vercel.app/issus/${params.id}`
           ),
       },
-      {
-        path: "/myContribution",
-        element: (
-          <PrivateRoute>
-            <MyContribution></MyContribution>
-          </PrivateRoute>
-        ),
-        loader: () =>
-          fetch(
-            "https://community-cleanliness-issue-reporti.vercel.app/contributions"
-          ),
-      },
+
       {
         path: "/myIssus",
         element: (
@@ -96,6 +87,28 @@ const router = createBrowserRouter([
       {
         path: "*",
         Component: Error,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: "profile",
+        Component: Profile,
+      },
+      {
+        path: "myContribution",
+        element: <MyContribution></MyContribution>,
+        loader: () =>
+          fetch(
+            "https://community-cleanliness-issue-reporti.vercel.app/contributions"
+          ),
       },
     ],
   },

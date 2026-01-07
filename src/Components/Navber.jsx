@@ -93,9 +93,14 @@ const handleLogOut = () => {
               {({ isActive }) => (<>My Issues {linkIndicator(isActive)}</>)}
             </NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink to="/myContribution" className={navLinkStyles}>
               {({ isActive }) => (<>My Contribution {linkIndicator(isActive)}</>)}
+            </NavLink>
+          </li> */}
+          <li>
+            <NavLink to="/dashboard" className={navLinkStyles}>
+              {({ isActive }) => (<>Dashboard {linkIndicator(isActive)}</>)}
             </NavLink>
           </li>
         </>
@@ -165,7 +170,7 @@ const handleLogOut = () => {
                   <p className="font-semibold truncate">{user?.displayName || "CleanCity Member"}</p>
                 </li>
                 <li>
-                  <Link to="/profile" className="flex items-center gap-3 p-3 hover:bg-white/10 rounded-xl transition-colors">
+                  <Link to="/dashboard/profile" className="flex items-center gap-3 p-3 hover:bg-white/10 rounded-xl transition-colors">
                     <FaUser className="text-secondary" /> Profile
                   </Link>
                 </li>
