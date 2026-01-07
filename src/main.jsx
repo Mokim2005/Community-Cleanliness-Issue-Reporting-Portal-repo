@@ -99,14 +99,15 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+            {
+       index: true,
+        Component: DashboardHome,
+      },
       {
         path: "profile",
         Component: Profile,
       },
-      {
-        path: "dashboardHome",
-        Component: DashboardHome,
-      },
+
       {
         path: "myContribution",
         element: <MyContribution></MyContribution>,
