@@ -1,84 +1,131 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, Megaphone } from "lucide-react";
+import { ArrowRight, Sparkles, Leaf } from "lucide-react";
 import { Link } from "react-router";
 
 const Banner = () => {
+  // ১. সরাসরি লোকাল স্টোরেজ থেকে ইনিশিয়াল ভ্যালু নেওয়া (যাতে রিলোডে স্টেট ঠিক থাকে)
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+    const html = document.documentElement;
+
+    // থিম অনুযায়ী ক্লাস এবং DaisyUI এর data-theme সেট করা
+    if (theme === "dark") {
+      html.classList.add("dark");
+      html.setAttribute("data-theme", "dark");
+    } else {
+      html.classList.remove("dark");
+      html.setAttribute("data-theme", "light");
+    }
+
+    localStorage.setItem("theme", theme);
+  }, [theme]); // থিম চেঞ্জ হলেই এটি রান করবে
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  };
+
   return (
-    <div className="relative h-[65vh] md:h-[70vh] flex items-center justify-center overflow-hidden bg-[#050b18]">
-      
-      {/* 🔹 Background Abstract Decor */}
-      <div className="absolute top-[-10%] left-[-5%] w-[400px] h-[400px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-[-10%] right-[-5%] w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <div
+      className="relative h-[80vh] flex items-center justify-center overflow-hidden 
+                 bg-base-100 dark:bg-[#050b18] transition-colors duration-500 ease-in-out"
+    >
+      {/* 🌌 Animated Background Orbs */}
+      <motion.div
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.5, 0.3],
+          x: [0, 50, 0],
+        }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] 
+                   bg-primary/20 rounded-full blur-[120px] pointer-events-none"
+      />
+      <motion.div
+        animate={{
+          scale: [1, 1.3, 1],
+          opacity: [0.2, 0.4, 0.2],
+          y: [0, -50, 0],
+        }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] 
+                   bg-secondary/20 rounded-full blur-[150px] pointer-events-none"
+      />
 
-      {/* 🔹 Glassmorphism Card Container */}
-      <div className="max-w-5xl mx-auto relative z-10 px-6">
-        <div className="bg-white/[0.02] backdrop-blur-2xl border border-white/10 rounded-[3rem] p-10 md:p-16 text-center shadow-2xl">
-          
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-2 rounded-full text-xs font-black uppercase tracking-[0.2em] border border-emerald-500/20 mb-8"
-          >
-            <Sparkles size={14} /> Join the movement
-          </motion.div>
+      {/* 📦 Main Content */}
+      <div className="max-w-6xl mx-auto relative z-10 px-6 text-center">
+        {/* Floating Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.3em] shadow-xl mb-10
+                     bg-base-200 border border-base-300 text-base-content
+                     dark:bg-gradient-to-r dark:from-emerald-500/10 dark:to-blue-500/10 dark:backdrop-blur-md dark:text-emerald-400 dark:border-white/10"
+        >
+          <Leaf size={14} className="animate-pulse text-emerald-500" />
+          Clean & Green Community
+        </motion.div>
 
-          {/* Title */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-4xl md:text-7xl font-black text-white leading-tight uppercase tracking-tighter"
-          >
-            Keep Your Community <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-500">
-              Clean & Green
-            </span>
-          </motion.h1>
+        {/* Hero Title */}
+        <motion.h1
+          initial={{ opacity: 0, filter: "blur(10px)", y: 20 }}
+          animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-5xl md:text-8xl font-black leading-[0.95] uppercase tracking-tighter text-base-content"
+        >
+          Building a <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary animate-gradient-x">
+            Sustainable Future
+          </span>
+        </motion.h1>
 
-          {/* Description */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto mt-6 mb-10 leading-relaxed font-medium"
-          >
-            Report garbage, drainage, or pollution problems instantly. Take the first step toward a healthier, smarter city today!
-          </motion.p>
+        {/* Subtext */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="text-neutral mt-8 mb-12 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed font-medium"
+        >
+          Your active participation helps create a cleaner, healthier, and more
+          vibrant community for everyone.
+        </motion.p>
 
-          {/* Buttons */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.6 }}
-            className="flex flex-wrap justify-center gap-4"
-          >
-            <Link to="/report-issue">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-3 bg-emerald-500 text-[#050b18] font-black px-8 py-4 rounded-2xl shadow-xl shadow-emerald-500/20 hover:bg-emerald-400 transition-all uppercase tracking-widest text-sm"
-              >
-                <Megaphone size={18} /> Report Issue
-              </motion.button>
-            </Link>
+        {/* Action Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="flex flex-wrap justify-center items-center gap-6"
+        >
+          <Link to="/report-issue">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="btn btn-primary rounded-full px-10 h-16 uppercase tracking-widest font-black"
+            >
+              <Sparkles size={20} /> Report an Issue
+            </motion.button>
+          </Link>
 
-            <Link to="/allIssues">
-              <motion.button
-                whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.08)" }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-3 bg-white/5 text-white border border-white/10 font-black px-8 py-4 rounded-2xl transition-all uppercase tracking-widest text-sm"
-              >
-                View Map <ArrowRight size={18} />
-              </motion.button>
-            </Link>
-          </motion.div>
-        </div>
+          <Link to="/issues">
+            <motion.button className="btn btn-outline rounded-full px-10 h-16 uppercase tracking-widest font-black border-base-300 text-base-content">
+              Explore Map <ArrowRight size={20} />
+            </motion.button>
+          </Link>
+        </motion.div>
+
+        {/* 🌙 Theme Toggle Button (Testing এর জন্য এটি আনকমেন্ট করুন) */}
+        {/* <button 
+           onClick={toggleTheme} 
+           className="mt-10 p-3 rounded-full bg-base-300 text-base-content shadow-lg font-bold"
+        >
+          {theme === 'dark' ? '🌞 Switch to Light' : '🌙 Switch to Dark'}
+        </button> 
+        */}
       </div>
 
-      {/* 🔹 Bottom Animated Wave/Glow */}
-      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent shadow-[0_0_50px_2px_rgba(16,185,129,0.3)]"></div>
+      <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
     </div>
   );
 };

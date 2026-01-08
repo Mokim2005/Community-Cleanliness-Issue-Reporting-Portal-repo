@@ -9,74 +9,82 @@ const LatestIssusCard = ({ data, index }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }} // staggered delay
-      whileHover={{ y: -10 }}
-      className="group relative max-w-sm w-full bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl transition-all duration-500 mx-auto"
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      whileHover={{ y: -8 }}
+      // bg-base-200 ব্যবহার করা হয়েছে যাতে ডার্ক মোডে এটি স্লেট এবং লাইট মোডে হালকা অফ-হোয়াইট হয়
+      className="group relative max-w-sm w-full bg-base-200 border border-base-300 rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 mx-auto"
     >
-      {/* Image Section */}
-      <div className="relative h-60 overflow-hidden">
+      {/* 🖼️ Image Section */}
+      <div className="relative h-56 overflow-hidden">
         <img
           src={image}
           alt={title}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
-        {/* Overlay Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050b18] via-[#050b18]/20 to-transparent"></div>
-        
+        {/* থিম অনুযায়ী ইমেজ ওভারলে */}
+        <div className="absolute inset-0 bg-gradient-to-t from-base-200 via-transparent to-transparent"></div>
+
         {/* Floating Category Badge */}
         <div className="absolute top-4 left-4">
-          <span className="flex items-center gap-1.5 bg-emerald-500/20 backdrop-blur-md text-emerald-400 text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-full border border-emerald-500/30">
+          <span className="flex items-center gap-1.5 bg-primary/20 backdrop-blur-md text-primary text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-xl border border-primary/20">
             <Layers size={12} />
             {category}
           </span>
         </div>
       </div>
 
-      {/* Content Section */}
+      {/* 📝 Content Section */}
       <div className="p-6 space-y-4">
         <div className="space-y-2">
-          <h2 className="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors line-clamp-1">
+          {/* text-base-content অটোমেটিক থিম অনুযায়ী কালার নিবে */}
+          <h2 className="text-xl font-black text-base-content group-hover:text-primary transition-colors line-clamp-1 tracking-tight">
             {title}
           </h2>
 
-          <div className="flex items-center gap-2 text-slate-400 text-xs font-medium uppercase tracking-tighter">
-            <MapPin size={14} className="text-emerald-500" />
+          <div className="flex items-center gap-1.5 text-neutral text-[11px] font-bold uppercase tracking-wider">
+            <MapPin size={14} className="text-primary" />
             <span className="truncate">{location}</span>
           </div>
         </div>
 
-        <p className="text-slate-400 text-sm leading-relaxed line-clamp-2 h-10">
+        <p className="text-neutral text-sm leading-relaxed line-clamp-2 h-10 font-medium opacity-80">
           {description}
         </p>
 
-        {/* Divider */}
-        <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+        {/* Dynamic Divider */}
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-base-300 to-transparent"></div>
 
-        {/* Footer */}
+        {/* 💰 Footer Section */}
         <div className="flex items-center justify-between pt-2">
           <div className="flex flex-col">
-            <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Required</span>
-            <p className="text-emerald-500 font-black text-lg flex items-center gap-1">
-              <Banknote size={16} /> ৳{amount}
+            <span className="text-[10px] font-bold text-neutral/60 uppercase tracking-widest">
+              Est. Cost
+            </span>
+            <p className="text-primary font-black text-xl flex items-center gap-1">
+              ৳{amount}
             </p>
           </div>
 
           <Link to={`/issueDetails/${_id}`}>
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-2 bg-emerald-500 text-white p-3 rounded-2xl shadow-lg shadow-emerald-500/20 hover:bg-emerald-400 transition-all cursor-pointer"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              // btn-primary সরাসরি আপনার index.css এর কাস্টম গ্রাডিয়েন্ট ব্যবহার করবে
+              className="flex items-center justify-center bg-primary text-primary-content w-12 h-12 rounded-2xl shadow-lg shadow-primary/30 cursor-pointer group/btn"
             >
-              <span className="text-xs font-black uppercase tracking-widest ml-1 italic">Details</span>
-              <ArrowUpRight size={18} />
+              <ArrowUpRight
+                size={22}
+                className="group-hover/btn:rotate-45 transition-transform duration-300"
+              />
             </motion.div>
           </Link>
         </div>
       </div>
 
-      {/* Hover Light Effect */}
-      <div className="absolute -inset-px bg-gradient-to-br from-emerald-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-[2.5rem]"></div>
+      {/* 💡 Hover Glow Effect */}
+      <div className="absolute -inset-px bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-[2rem]"></div>
     </motion.div>
   );
 };
