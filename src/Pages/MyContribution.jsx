@@ -11,6 +11,7 @@ const MyContribution = () => {
   const { user } = useContext(AuthContext);
   const data = useLoaderData();
 
+  // ডাটা ফিল্টার করা
   const myContributions = Array.isArray(data)
     ? data.filter((item) => item.email === user?.email)
     : [];
@@ -43,91 +44,98 @@ const MyContribution = () => {
   };
 
   return (
-    <div className="min-h-screen py-16 px-4 md:px-10 relative overflow-hidden">
-      <title>My Contributions | CleanCity</title>
+    <div className="min-h-screen bg-base-100 text-base-content transition-colors duration-500 pb-20 relative overflow-hidden">
+      <title>My Contributions | City Fix</title>
 
-      {/* Background Decor */}
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-secondary/10 rounded-full blur-[120px] pointer-events-none"></div>
+      {/* 🔹 Background Decor */}
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[120px] pointer-events-none"></div>
 
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Header Section */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12 space-y-4"
+          className="text-center mb-12 space-y-4 pt-10"
         >
-          <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight uppercase">
-            My <span className="text-secondary">Contributions</span>
+          <h2 className="text-3xl md:text-5xl font-black tracking-tight uppercase italic">
+            My <span className="text-primary">Contributions</span>
           </h2>
-          <p className="text-slate-400 font-medium">History of your support for a cleaner community</p>
-          <div className="h-1 w-20 bg-secondary mx-auto rounded-full"></div>
+          <p className="opacity-60 font-medium">
+            History of your support for a cleaner community
+          </p>
+          <div className="h-1.5 w-24 bg-primary mx-auto rounded-full"></div>
         </motion.div>
 
         {myContributions.length === 0 ? (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-center py-20 bg-white/5 backdrop-blur-xl border border-dashed border-white/10 rounded-[3rem]"
+            className="text-center py-24 bg-base-200 border-2 border-dashed border-base-300 rounded-[3rem] shadow-inner"
           >
-            <History size={48} className="mx-auto text-slate-600 mb-4" />
-            <p className="text-slate-400 text-lg font-bold uppercase tracking-widest">
+            <History size={64} className="mx-auto opacity-20 mb-6" />
+            <p className="opacity-50 text-lg font-black uppercase tracking-[0.3em]">
               No contributions found yet.
             </p>
           </motion.div>
         ) : (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="overflow-hidden shadow-2xl bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[2.5rem]"
+            className="overflow-hidden shadow-2xl bg-base-200 border border-base-300 rounded-[2.5rem]"
           >
             <div className="overflow-x-auto">
-              <table className="min-w-full text-center border-collapse">
-                <thead className="bg-white/5 text-secondary text-xs uppercase font-black tracking-[0.2em]">
+              <table className="table w-full text-center border-collapse">
+                {/* Table Head */}
+                <thead className="bg-base-300/50 text-base-content/70 text-xs uppercase font-black tracking-[0.2em]">
                   <tr>
-                    <th className="py-6 px-6">Issue Title</th>
+                    <th className="py-6 px-8 text-left">Issue Title</th>
                     <th className="py-6 px-6">Category</th>
                     <th className="py-6 px-6">Paid Amount</th>
                     <th className="py-6 px-6">Date</th>
-                    <th className="py-6 px-6 text-right pr-10">Action</th>
+                    <th className="py-6 px-8 text-right">Action</th>
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-white/5">
+                {/* Table Body */}
+                <tbody className="divide-y divide-base-300">
                   {myContributions.map((issue, index) => (
                     <motion.tr
-                      key={issue._id}
+                      key={issue._id || index}
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="group hover:bg-white/[0.03] transition-colors duration-300"
+                      className="group hover:bg-base-300/40 transition-colors duration-300"
                     >
-                      <td className="py-5 px-6 font-bold text-white text-left max-w-xs truncate">
+                      <td className="py-5 px-8 font-bold text-left max-w-xs">
                         <div className="flex items-center gap-3">
-                          <Layers size={16} className="text-secondary opacity-50" />
-                          {issue.title}
+                          <Layers
+                            size={18}
+                            className="text-primary opacity-70 group-hover:scale-110 transition-transform"
+                          />
+                          <span className="truncate">{issue.title}</span>
                         </div>
                       </td>
                       <td className="py-5 px-6">
-                        <span className="px-3 py-1 bg-white/5 rounded-full text-[10px] font-black text-slate-400 uppercase tracking-tighter border border-white/10">
+                        <span className="badge badge-outline badge-primary font-black uppercase text-[10px] py-3 px-4 tracking-widest">
                           {issue?.category}
                         </span>
                       </td>
                       <td className="py-5 px-6">
-                        <div className="flex items-center justify-center gap-2 text-white font-black">
-                          <CreditCard size={14} className="text-secondary" />
-                          ৳{issue.amount || 0}
+                        <div className="flex items-center justify-center gap-2 font-black text-lg">
+                          <CreditCard size={16} className="text-secondary" />৳
+                          {issue.amount || 0}
                         </div>
                       </td>
-                      <td className="py-5 px-6 text-slate-400 text-sm font-medium">
+                      <td className="py-5 px-6 opacity-70 font-bold text-sm">
                         {issue.date || "N/A"}
                       </td>
-                      <td className="py-5 px-6 text-right pr-10">
+                      <td className="py-5 px-8 text-right">
                         <button
                           onClick={() => downloadToPdf(issue)}
-                          className="inline-flex items-center gap-2 bg-secondary text-secondary-content px-5 py-2.5 rounded-xl font-black text-xs uppercase tracking-widest hover:scale-105 transition-transform shadow-lg shadow-secondary/20"
+                          className="btn btn-primary btn-sm rounded-xl font-black text-[10px] uppercase tracking-tighter hover:scale-105 shadow-md shadow-primary/20"
                         >
-                          <FileDown className="w-4 h-4" />
+                          <FileDown className="w-3.5 h-3.5" />
                           PDF
                         </button>
                       </td>
@@ -139,8 +147,9 @@ const MyContribution = () => {
           </motion.div>
         )}
 
-        <div className="mt-10 flex items-center justify-center gap-2 text-slate-500 italic text-sm">
-          <History size={14} />
+        {/* Footer Info */}
+        <div className="mt-12 flex items-center justify-center gap-2 opacity-40 italic text-sm font-medium">
+          <History size={16} />
           <span>Keep up the great work! Your support makes a difference.</span>
         </div>
       </div>
