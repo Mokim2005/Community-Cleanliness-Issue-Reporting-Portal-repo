@@ -79,22 +79,25 @@ const Footer = () => {
             Links
           </h6>
           <ul className="space-y-4 text-sm font-bold">
-            {["Home", "All Issues", "Add Issue", "My Contribution"].map(
-              (item) => (
-                <li key={item}>
-                  <Link
-                    to={
-                      item === "Home"
-                        ? "/"
-                        : `/${item.toLowerCase().replace(/\s/g, "")}`
-                    }
-                    className="hover:text-primary hover:translate-x-2 flex items-center transition-all duration-300 opacity-70 hover:opacity-100"
-                  >
-                    <span className="mr-2">→</span> {item}
-                  </Link>
-                </li>
-              )
-            )}
+            {[
+              { name: "Home", path: "/" },
+              { name: "All Issues", path: "/issus" }, 
+              { name: "Add Issue", path: "/addIssus" },
+              { name: "My Issues", path: "/myIssus" },
+              { name: "About Us", path: "/aboutUs" },
+            ].map((link) => (
+              <li key={link.name}>
+                <Link
+                  to={link.path}
+                  className="hover:text-primary hover:translate-x-2 flex items-center transition-all duration-300 opacity-70 hover:opacity-100"
+                >
+                  <span className="mr-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    →
+                  </span>
+                  {link.name}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -115,12 +118,12 @@ const Footer = () => {
             </li>
             <li className="flex items-center gap-3 group">
               <FaPhone className="text-primary group-hover:scale-125 transition-transform" />
-              <span className="opacity-70">+880 1234 567 890</span>
+              <span className="opacity-70">+880 1729 4343 23</span>
             </li>
             <li className="flex items-center gap-3 group">
               <FaEnvelope className="text-primary group-hover:scale-125 transition-transform" />
               <span className="hover:text-primary cursor-pointer transition-colors opacity-70">
-                support@cleancity.com
+                support@cleancity.com , mamokim2005@gmail.com
               </span>
             </li>
           </ul>

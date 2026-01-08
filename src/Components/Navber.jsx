@@ -77,13 +77,13 @@ const Navbar = () => {
           {({ isActive }) => <>All Issues {linkIndicator(isActive)}</>}
         </NavLink>
       </li>
+      <li>
+        <NavLink to="/addIssus" className={navLinkStyles}>
+          {({ isActive }) => <>Add Issue {linkIndicator(isActive)}</>}
+        </NavLink>
+      </li>
       {user && (
         <>
-          <li>
-            <NavLink to="/addIssus" className={navLinkStyles}>
-              {({ isActive }) => <>Add Issue {linkIndicator(isActive)}</>}
-            </NavLink>
-          </li>
           <li>
             <NavLink to="/myIssus" className={navLinkStyles}>
               {({ isActive }) => <>My Issues {linkIndicator(isActive)}</>}
@@ -200,7 +200,7 @@ const Navbar = () => {
                 </li>
                 <li>
                   <Link
-                    to="/myContribution"
+                    to="/dashboard/myContribution"
                     className="flex items-center gap-3 p-3 hover:bg-primary/10 rounded-xl transition-colors text-base-content"
                   >
                     <FaHistory className="text-primary" /> Contributions
