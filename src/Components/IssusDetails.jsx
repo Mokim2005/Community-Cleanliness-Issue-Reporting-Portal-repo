@@ -1,14 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useLoaderData } from "react-router";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  MapPin,
-  CalendarDays,
-  DollarSign,
-  FileText,
-  X,
-  Send,
-} from "lucide-react";
+import { MapPin, CalendarDays, DollarSign, X } from "lucide-react";
 import { AuthContext } from "../Context/AuthContext";
 import DetailsTable from "./DetailsTable";
 import Swal from "sweetalert2";
@@ -36,11 +29,12 @@ const IssueDetails = () => {
   const handleContribution = (e) => {
     e.preventDefault();
     const form = e.target;
+    const isDark = document.documentElement.classList.contains("dark");
 
     const contributionData = {
       issueId: _id,
-      title: title,
-      category: category,
+      title,
+      category,
       amount: form.amount.value,
       contributorName: form.name.value,
       email: user?.email,
@@ -65,9 +59,9 @@ const IssueDetails = () => {
           title: "Contribution Successful!",
           text: "Thank you for supporting a cleaner community.",
           icon: "success",
-          background: "#0f172a",
-          color: "#fff",
-          confirmButtonColor: "#10b981",
+          background: isDark ? "#0f172a" : "#ffffff", // ডাইনামিক ব্যাকগ্রাউন্ড
+          color: isDark ? "#fff" : "#1e293b",
+          confirmButtonColor: "#4f46e5",
         });
         setIsOpen(false);
         form.reset();
@@ -79,19 +73,19 @@ const IssueDetails = () => {
   };
 
   return (
-    <div className="min-h-screen py-12 px-4 md:px-8 relative overflow-hidden bg-[#050b18]">
-      <title>Issues Details</title>
+    <div className="min-h-screen py-12 px-4 md:px-8 relative overflow-hidden bg-base-100 text-base-content transition-colors duration-500">
+      <title>Issue Details | {title}</title>
 
       {/* Background Decor */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[120px] pointer-events-none"></div>
 
       <div className="max-w-6xl mx-auto space-y-16 relative z-10">
         {/* Main Card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="grid grid-cols-1 lg:grid-cols-2 bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl"
+          className="grid grid-cols-1 lg:grid-cols-2 bg-base-200 border border-base-300 rounded-[2.5rem] overflow-hidden shadow-2xl"
         >
           {/* Left: Image */}
           <div className="relative h-80 lg:h-auto group overflow-hidden">
@@ -100,48 +94,48 @@ const IssueDetails = () => {
               alt={title}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#050b18]/80 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-base-300/50 to-transparent"></div>
           </div>
 
           {/* Right: Info */}
           <div className="p-8 md:p-12 space-y-6">
-            <span className="inline-block bg-emerald-500/10 text-emerald-400 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-emerald-500/20">
+            <span className="inline-block bg-primary/10 text-primary px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-primary/20">
               {category}
             </span>
-            <h1 className="text-3xl md:text-5xl font-black text-white leading-tight">
+            <h1 className="text-3xl md:text-5xl font-black text-base-content leading-tight">
               {title}
             </h1>
-            <div className="flex items-center gap-2 text-emerald-500 font-bold">
+            <div className="flex items-center gap-2 text-primary font-bold">
               <MapPin size={18} />
               <span>{location}</span>
             </div>
 
-            <div className="grid grid-cols-2 gap-6 py-6 border-y border-white/5">
+            <div className="grid grid-cols-2 gap-6 py-6 border-y border-base-300">
               <div>
-                <p className="text-[10px] uppercase font-bold text-slate-500 tracking-widest mb-1">
+                <p className="text-[10px] uppercase font-bold text-neutral tracking-widest mb-1">
                   Posted On
                 </p>
-                <p className="text-white font-bold flex items-center gap-2">
-                  <CalendarDays size={14} /> {date}
+                <p className="font-bold flex items-center gap-2 text-base-content">
+                  <CalendarDays size={14} className="text-primary" /> {date}
                 </p>
               </div>
               <div>
-                <p className="text-[10px] uppercase font-bold text-slate-500 tracking-widest mb-1">
+                <p className="text-[10px] uppercase font-bold text-neutral tracking-widest mb-1">
                   Target
                 </p>
-                <p className="text-emerald-500 text-2xl font-black italic">
+                <p className="text-primary text-2xl font-black italic">
                   ৳{amount}
                 </p>
               </div>
             </div>
 
-            <p className="text-slate-400 leading-relaxed text-sm">
+            <p className="text-neutral leading-relaxed text-sm">
               {description}
             </p>
 
             <button
               onClick={() => setIsOpen(true)}
-              className="w-full py-4 bg-emerald-500 text-white font-black rounded-2xl shadow-lg shadow-emerald-500/20 hover:bg-emerald-400 transition-all flex justify-center items-center gap-3 tracking-widest uppercase text-xs"
+              className="btn btn-primary w-full h-14 rounded-2xl shadow-lg shadow-primary/20 tracking-widest uppercase text-xs font-black"
             >
               <DollarSign size={18} /> Contribute Now
             </button>
@@ -151,20 +145,19 @@ const IssueDetails = () => {
         {/* Contribution Board */}
         <div className="space-y-8">
           <div className="flex items-center gap-4 px-2">
-            <h2 className="text-2xl font-black text-white uppercase tracking-tighter italic">
+            <h2 className="text-2xl font-black text-base-content uppercase tracking-tighter italic">
               Contribution Board
             </h2>
-            <div className="h-px flex-grow bg-white/5"></div>
+            <div className="h-px flex-grow bg-base-300"></div>
           </div>
 
-          {/* Table container with fixed hover style */}
-          <div className="bg-white/[0.02] border border-white/10 rounded-[2rem] overflow-hidden">
+          <div className="bg-base-200 border border-base-300 rounded-[2rem] overflow-hidden">
             <DetailsTable contributors={contributors} />
           </div>
         </div>
       </div>
 
-      {/* Modal - same as before but with consistent colors */}
+      {/* Modal */}
       <AnimatePresence>
         {isOpen && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
@@ -173,61 +166,43 @@ const IssueDetails = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="absolute inset-0 bg-[#050b18]/90 backdrop-blur-md"
+              className="absolute inset-0 bg-black/60 backdrop-blur-md"
             />
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-[#0f172a] border border-white/10 w-full max-w-lg rounded-[2.5rem] p-8 relative z-10 shadow-3xl"
+              className="bg-base-100 border border-base-300 w-full max-w-lg rounded-[2.5rem] p-8 relative z-10 shadow-3xl text-base-content"
             >
               <div className="flex justify-between mb-6">
-                <h2 className="text-2xl font-black text-white italic tracking-tight">
+                <h2 className="text-2xl font-black italic tracking-tight">
                   Support Community
                 </h2>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="text-slate-500 hover:text-white"
+                  className="text-neutral hover:text-primary"
                 >
                   <X />
                 </button>
               </div>
               <form onSubmit={handleContribution} className="space-y-4">
-                <input
-                  type="number"
-                  name="amount"
-                  placeholder="Amount (৳)"
-                  required
-                  className="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-emerald-500"
-                />
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Full Name"
-                  required
-                  className="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-emerald-500"
-                />
-                <input
-                  type="text"
-                  name="phone"
-                  placeholder="Phone Number"
-                  required
-                  className="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-emerald-500"
-                />
-                <input
-                  type="text"
-                  name="address"
-                  placeholder="Address"
-                  required
-                  className="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-emerald-500"
-                />
+                {["amount", "name", "phone", "address"].map((field) => (
+                  <input
+                    key={field}
+                    type={field === "amount" ? "number" : "text"}
+                    name={field}
+                    placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+                    required
+                    className="input input-bordered w-full bg-base-200 focus:border-primary"
+                  />
+                ))}
                 <textarea
                   name="info"
                   rows="2"
                   placeholder="Message (Optional)"
-                  className="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-emerald-500 resize-none"
+                  className="textarea textarea-bordered w-full bg-base-200 focus:border-primary"
                 />
-                <button className="w-full py-4 bg-emerald-500 text-white font-black rounded-xl uppercase tracking-widest text-xs">
+                <button className="btn btn-primary w-full uppercase tracking-widest font-black">
                   Confirm Support
                 </button>
               </form>
