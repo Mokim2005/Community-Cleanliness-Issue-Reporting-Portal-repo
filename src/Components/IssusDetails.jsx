@@ -151,7 +151,7 @@ const IssueDetails = () => {
             <div className="h-px flex-grow bg-base-300"></div>
           </div>
 
-          <div className="bg-base-200 border border-base-300 rounded-[2rem] overflow-hidden">
+          <div className="bg-base-200 border border-base-300 rounded-[2rem] overflow-hidden shadow-xl">
             <DetailsTable contributors={contributors} />
           </div>
         </div>

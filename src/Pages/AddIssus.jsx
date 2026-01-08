@@ -51,24 +51,25 @@ const AddIssus = () => {
   };
 
   return (
-    <div className="min-h-screen py-16 px-4 relative overflow-hidden flex items-center justify-center">
+    <div className="min-h-screen py-16 px-4 relative overflow-hidden flex items-center justify-center bg-base-100 text-base-content transition-colors duration-500">
       <title>Report Issue | CleanCity</title>
 
-      {/* Background Glows */}
-      <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-secondary/10 rounded-full blur-[120px] pointer-events-none"></div>
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+      {/* Background Glows - Using Theme Variables */}
+      <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
 
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-3xl bg-white/5 backdrop-blur-2xl border border-white/10 shadow-2xl rounded-[2.5rem] p-8 md:p-12 relative z-10"
+        className="w-full max-w-3xl bg-base-200 backdrop-blur-2xl border border-base-300 shadow-2xl rounded-[2.5rem] p-8 md:p-12 relative z-10"
       >
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-5xl font-black text-white mb-4 tracking-tight">
-            Report <span className="text-secondary">Issue</span>
+          <h2 className="text-3xl md:text-5xl font-black text-base-content mb-4 tracking-tight uppercase italic">
+            Report <span className="text-primary">Issue</span>
           </h2>
-          <p className="text-slate-400 font-medium italic">
+          <p className="text-neutral font-medium italic opacity-80">
             Help us identify cleanliness problems in your community
           </p>
         </div>
@@ -79,114 +80,106 @@ const AddIssus = () => {
         >
           {/* Issue Title */}
           <div className="space-y-2 md:col-span-2">
-            <label className="text-xs font-bold text-slate-500 ml-1 uppercase flex items-center gap-2">
-              <FaTag className="text-secondary" /> Issue Title
+            <label className="text-[10px] font-black text-neutral/70 ml-1 uppercase flex items-center gap-2 tracking-widest">
+              <FaTag className="text-primary" /> Issue Title
             </label>
             <input
               type="text"
               name="title"
               placeholder="e.g. Broken drainage system"
-              className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl focus:outline-none focus:border-secondary transition-all text-white placeholder:text-slate-600"
+              className="input input-bordered w-full bg-base-100 focus:border-primary rounded-2xl p-4 h-14"
               required
             />
           </div>
 
           {/* Category */}
           <div className="space-y-2">
-            <label className="text-xs font-bold text-slate-500 ml-1 uppercase flex items-center gap-2">
-              <FaTag size={12} className="text-secondary" /> Category
+            <label className="text-[10px] font-black text-neutral/70 ml-1 uppercase flex items-center gap-2 tracking-widest">
+              <FaTag size={12} className="text-primary" /> Category
             </label>
             <select
               name="category"
               required
-              className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl focus:outline-none focus:border-secondary transition-all text-white appearance-none cursor-pointer"
+              className="select select-bordered w-full bg-base-100 focus:border-primary rounded-2xl h-14"
             >
-              <option className="bg-[#0f172a]" value="">
+              <option value="" disabled selected>
                 Select category
               </option>
-              <option className="bg-[#0f172a]" value="Garbage">
-                Garbage
-              </option>
-              <option className="bg-[#0f172a]" value="Drainage">
-                Drainage
-              </option>
-              <option className="bg-[#0f172a]" value="Pollution">
-                Pollution
-              </option>
-              <option className="bg-[#0f172a]" value="Others">
-                Others
-              </option>
+              <option value="Garbage">Garbage</option>
+              <option value="Drainage">Drainage</option>
+              <option value="Pollution">Pollution</option>
+              <option value="Others">Others</option>
             </select>
           </div>
 
           {/* Location */}
           <div className="space-y-2">
-            <label className="text-xs font-bold text-slate-500 ml-1 uppercase flex items-center gap-2">
-              <FaMapMarkerAlt size={12} className="text-secondary" /> Location
+            <label className="text-[10px] font-black text-neutral/70 ml-1 uppercase flex items-center gap-2 tracking-widest">
+              <FaMapMarkerAlt size={12} className="text-primary" /> Location
             </label>
             <input
               type="text"
               name="location"
               placeholder="Tejgaon, Dhaka"
-              className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl focus:outline-none focus:border-secondary transition-all text-white"
+              className="input input-bordered w-full bg-base-100 focus:border-primary rounded-2xl h-14"
               required
             />
           </div>
 
           {/* Budget */}
           <div className="space-y-2">
-            <label className="text-xs font-bold text-slate-500 ml-1 uppercase flex items-center gap-2">
-              <FaMoneyBillWave size={12} className="text-secondary" /> Estimated
-              Budget (৳)
+            <label className="text-[10px] font-black text-neutral/70 ml-1 uppercase flex items-center gap-2 tracking-widest">
+              <FaMoneyBillWave size={12} className="text-primary" /> Est. Budget
+              (৳)
             </label>
             <input
               type="number"
               name="amount"
               placeholder="500"
-              className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl focus:outline-none focus:border-secondary transition-all text-white"
+              className="input input-bordered w-full bg-base-100 focus:border-primary rounded-2xl h-14"
               required
             />
           </div>
 
           {/* Image URL */}
           <div className="space-y-2">
-            <label className="text-xs font-bold text-slate-500 ml-1 uppercase flex items-center gap-2">
-              <FaLink size={12} className="text-secondary" /> Image URL
+            <label className="text-[10px] font-black text-neutral/70 ml-1 uppercase flex items-center gap-2 tracking-widest">
+              <FaLink size={12} className="text-primary" /> Image URL
             </label>
             <input
               type="url"
               name="image"
               placeholder="https://imgur.com/example.jpg"
-              className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl focus:outline-none focus:border-secondary transition-all text-white"
+              className="input input-bordered w-full bg-base-100 focus:border-primary rounded-2xl h-14"
               required
             />
           </div>
 
           {/* Description */}
           <div className="space-y-2 md:col-span-2">
-            <label className="text-xs font-bold text-slate-500 ml-1 uppercase flex items-center gap-2">
-              <FaAlignLeft size={12} className="text-secondary" /> Detailed
+            <label className="text-[10px] font-black text-neutral/70 ml-1 uppercase flex items-center gap-2 tracking-widest">
+              <FaAlignLeft size={12} className="text-primary" /> Detailed
               Description
             </label>
             <textarea
               name="description"
               rows="4"
               placeholder="Describe the issue in detail..."
-              className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl focus:outline-none focus:border-secondary transition-all text-white resize-none"
+              className="textarea textarea-bordered w-full bg-base-100 focus:border-primary rounded-2xl p-4 resize-none min-h-[120px]"
               required
             ></textarea>
           </div>
 
-          {/* User Email (Disabled) */}
+          {/* User Email (Read Only style) */}
           <div className="space-y-2 md:col-span-2">
-            <label className="text-xs font-bold text-slate-500 ml-1 uppercase flex items-center gap-2">
-              <FaEnvelope size={12} className="text-secondary" /> Reporter Email
+            <label className="text-[10px] font-black text-neutral/70 ml-1 uppercase flex items-center gap-2 tracking-widest">
+              <FaEnvelope size={12} className="text-primary" /> Reporter Email
             </label>
             <input
               type="email"
               value={user?.email || ""}
-              disabled
-              className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl text-slate-500 font-bold cursor-not-allowed italic"
+              readOnly
+              className="input input-bordered w-full bg-base-300 border-none text-neutral font-bold cursor-not-allowed italic"
             />
           </div>
 
@@ -196,7 +189,7 @@ const AddIssus = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
-              className="w-full py-5 bg-secondary text-secondary-content font-black rounded-2xl shadow-xl shadow-secondary/20 hover:shadow-secondary/40 transition-all uppercase tracking-widest flex justify-center items-center gap-3"
+              className="btn btn-primary w-full h-16 rounded-2xl shadow-xl shadow-primary/20 hover:shadow-primary/40 transition-all uppercase tracking-widest font-black text-xs"
             >
               🚀 Submit Issue
             </motion.button>
