@@ -11,6 +11,7 @@ import JoinCleanDrive from "../Components/VolunteerCTA";
 
 const Home = () => {
   const latestData = useLoaderData();
+  const dataArray = Array.isArray(latestData) ? latestData : latestData ? [latestData] : [];
   return (
     <div>
       <title>Home</title>
@@ -25,8 +26,8 @@ const Home = () => {
           Latest Complain
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4">
-          {latestData?.map((data) => (
-            <LatestIssusCard data={data}></LatestIssusCard>
+          {dataArray.map((data) => (
+            <LatestIssusCard key={data._id || data.id} data={data}></LatestIssusCard>
           ))}
         </div>
       </div>

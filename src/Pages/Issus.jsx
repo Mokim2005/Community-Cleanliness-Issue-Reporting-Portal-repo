@@ -11,7 +11,8 @@ import {
 } from "react-icons/fa";
 
 const Issus = () => {
-  const data = useLoaderData() || [];
+  const rawData = useLoaderData();
+  const data = Array.isArray(rawData) ? rawData : [];
 
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
