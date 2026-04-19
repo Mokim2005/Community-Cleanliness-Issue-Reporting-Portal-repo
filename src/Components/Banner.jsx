@@ -4,13 +4,11 @@ import { ArrowRight, Sparkles, Leaf } from "lucide-react";
 import { Link } from "react-router";
 
 const Banner = () => {
-  // ১. সরাসরি লোকাল স্টোরেজ থেকে ইনিশিয়াল ভ্যালু নেওয়া (যাতে রিলোডে স্টেট ঠিক থাকে)
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   useEffect(() => {
     const html = document.documentElement;
 
-    // থিম অনুযায়ী ক্লাস এবং DaisyUI এর data-theme সেট করা
     if (theme === "dark") {
       html.classList.add("dark");
       html.setAttribute("data-theme", "dark");
@@ -20,7 +18,7 @@ const Banner = () => {
     }
 
     localStorage.setItem("theme", theme);
-  }, [theme]); // থিম চেঞ্জ হলেই এটি রান করবে
+  }, [theme]);
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
@@ -31,7 +29,6 @@ const Banner = () => {
       className="relative h-[80vh] flex items-center justify-center overflow-hidden 
                  bg-base-100 dark:bg-[#050b18] transition-colors duration-500 ease-in-out"
     >
-      {/* 🌌 Animated Background Orbs */}
       <motion.div
         animate={{
           scale: [1, 1.2, 1],
