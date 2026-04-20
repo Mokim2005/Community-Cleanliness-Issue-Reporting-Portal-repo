@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import { useLoaderData } from "react-router";
 import LatestIssusCard from "../Components/LatestIssusCard";
 import JoinCleanDrive from "../Components/VolunteerCTA";
+import ImpactSection from "../Components/ImpactSection";
 
 const Home = () => {
   const latestData = useLoaderData();
@@ -20,6 +21,7 @@ const Home = () => {
       <JoinCleanDrive></JoinCleanDrive>
       <Slider></Slider>
       <Cards></Cards>
+      <ImpactSection></ImpactSection>
       <ToastContainer></ToastContainer>
       <div>
         <h1 className="text-3xl text-primary text-center my-4 font-bold">
