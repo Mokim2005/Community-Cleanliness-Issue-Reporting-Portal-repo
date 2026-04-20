@@ -9,6 +9,7 @@ import { useLoaderData } from "react-router";
 import LatestIssusCard from "../Components/LatestIssusCard";
 import JoinCleanDrive from "../Components/VolunteerCTA";
 import ImpactSection from "../Components/ImpactSection";
+import HowItWorks from "../Components/HowItWorks";
 
 const Home = () => {
   const latestData = useLoaderData();
@@ -22,6 +23,7 @@ const Home = () => {
       <Slider></Slider>
       <Cards></Cards>
       <ImpactSection></ImpactSection>
+      <HowItWorks></HowItWorks>
       <ToastContainer></ToastContainer>
       <div>
         <h1 className="text-3xl text-primary text-center my-4 font-bold">
